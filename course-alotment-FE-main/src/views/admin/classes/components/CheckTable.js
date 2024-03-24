@@ -10,6 +10,7 @@ import {
   Tr,
   useColorModeValue,
   Icon,
+  Button,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -27,7 +28,9 @@ export default function CheckTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
+  const data = useMemo(() => tableData, [tableData]); //Dummy data, this will be chnaged to the actual data.
+
+  // prisma API call to get the data from the backend. data = axios(url, method).then() API response.
 
   const tableInstance = useTable(
     {
@@ -141,7 +144,20 @@ export default function CheckTable(props) {
                         {cell.value}
                       </Text>
                     );
+                  } else if (cell.column.Header === "Class Time") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "Teacher") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
                   }
+                  
                   return (
                     <Td
                       {...cell.getCellProps()}
@@ -154,6 +170,12 @@ export default function CheckTable(props) {
                     </Td>
                   );
                 })}
+                <Td>
+                    <Button colorScheme="blue"  size="sm">Update</Button>
+                    </Td>
+                    <Td>
+                    <Button colorScheme="blue" size="sm">Delete</Button>
+                    </Td>
               </Tr>
             );
           })}

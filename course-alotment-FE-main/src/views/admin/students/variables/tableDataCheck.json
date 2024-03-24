@@ -4,21 +4,26 @@
     "cnic": 374053247274,
     "Arid no": "20-Arid-632",
     "Degree": "BSCS",
-    "Class/Section": "7/B (eve)"
+    "Class/Section": "7/B (eve)",
+    "Courses": ["Web Technology","Operating System", "Linear Algebra"]
   },
   {
     "name": "Muhammad Tahir Hussain Khattak",
     "cnic": 3740528340671,
     "Arid no": "20-Arid-628",
     "Degree": "BSCS",
-    "Class/Section": "7/B (eve)"
+    "Class/Section": "7/B (eve)",
+    "Courses": ["Web Technology","Operating System", "Linear Algebra"]
+
   },
   {
     "name": "Ansarullah",
     "cnic": 3740536782384,
     "Arid no": "20-Arid-1034",
     "Degree": "BSCS",
-    "Class/Section": "7/B (eve)"
+    "Class/Section": "7/B (eve)",
+    "Courses": ["Web Technology","Operating System", "Linear Algebra"]
+
   }
  
   

@@ -10,6 +10,7 @@ import {
   Tr,
   useColorModeValue,
   Icon,
+  Button,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -142,6 +143,19 @@ export default function CheckTable(props) {
                       </Text>
                     );
                   }
+                  else if (cell.column.Header === "Courses") {
+                    data = (
+                      <ul>
+                          {cell.value.map((course, index) => (
+                          <li key={index}>
+                            <Text color={textColor} fontSize="sm" fontWeight="700">
+                            {course}
+                            </Text>
+                          </li>
+                          ))}
+                      </ul>
+                    );
+                  } 
                   return (
                     <Td
                       {...cell.getCellProps()}
@@ -154,6 +168,12 @@ export default function CheckTable(props) {
                     </Td>
                   );
                 })}
+                <Td>
+                    <Button colorScheme="blue" size="sm">Update</Button>
+                    </Td>
+                    <Td>
+                    <Button colorScheme="blue" size="sm">Delete</Button>
+                    </Td>
               </Tr>
             );
           })}

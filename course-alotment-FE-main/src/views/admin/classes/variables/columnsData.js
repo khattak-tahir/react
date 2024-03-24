@@ -20,4 +20,13 @@ export const columnsDataCheck = [
     Header: "Classroom",
     accessor: "Classroom",
   },
+  {
+    Header: "Class Time",
+    accessor: "Class Time",
+  },
+  {
+    Header: "Teacher",
+    accessor: "Teacher",
+  },
+ 
 ];

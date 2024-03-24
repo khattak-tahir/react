@@ -5,8 +5,29 @@ import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React from "react";
 import {  MdBugReport, MdCoPresent, MdOutlineSchool, MdOutlineTableChart,  } from "react-icons/md";
+//import getStudents, getteacher from 'demoprisma' all the API functions
 
 export default function UserReports() {
+  // const [totalStudent, setTotalStudent] = useState(0);
+  // const [totalTeacher, setTotalTeacher] = useState(0);
+
+  /* useEffect(()=>{
+        getData();
+  },[]) */
+
+  /*
+  const getData(){
+    getTotalStudent().then((res)=>{
+        setTotalStudent(res.data);
+    });
+    getTotalTeacher().then((res)=>{
+      setTotalTeacher(res.data);
+    })
+    });
+  }
+  */
+
+
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
@@ -30,7 +51,7 @@ export default function UserReports() {
             />
           }
           name="Total Students"
-          value="3"
+          value="3" //{totalStudent}
         />
         <MiniStatistics
           startContent={

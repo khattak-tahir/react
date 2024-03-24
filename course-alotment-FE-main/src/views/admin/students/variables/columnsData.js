@@ -19,4 +19,9 @@ export const columnsDataCheck = [
     Header: "Class/Section",
     accessor: "Class/Section",
   },
+  {
+    Header: "Courses",
+    accessor: "Courses",
+  },
+
 ];

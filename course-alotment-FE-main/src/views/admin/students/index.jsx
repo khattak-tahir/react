@@ -5,6 +5,8 @@ import tableDataCheck from "views/admin/students/variables/tableDataCheck.json";
 import React from "react";
 
 export default function Students() {
+  // same as the  Dashboard componet
+  // useState, useeffect
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid

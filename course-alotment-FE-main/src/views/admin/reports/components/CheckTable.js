@@ -9,6 +9,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  Button,
   
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
@@ -150,7 +151,7 @@ export default function CheckTable(props) {
                         {cell.value}
                       </Textarea>
                     );
-                  }
+                  } 
                   return (
                     <Td
                       {...cell.getCellProps()}
@@ -163,6 +164,12 @@ export default function CheckTable(props) {
                     </Td>
                   );
                 })}
+                <Td>
+                    <Button colorScheme="blue" size="sm">Update</Button>
+                    </Td>
+                    <Td>
+                    <Button colorScheme="blue" size="sm">Delete</Button>
+                    </Td>
               </Tr>
             );
           })}
