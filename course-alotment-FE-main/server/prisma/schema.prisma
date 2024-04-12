@@ -1,60 +1,67 @@
-generator client{
-    provider="prisma-client-js"
+generator client {
+    provider = "prisma-client-js"
 }
 
-datasource db{
-    provider ="mysql"
-    url = env("DATABASE_URL")
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model students {
-    id Int @id @default(autoincrement())
-    name String
-    cnic Int  @unique
-    aridno String
-    degree String
+    id            Int       @id @default(autoincrement())
+    name          String
+    cnic          Int       @unique
+    aridno        String
+    degree        String
     class_section String
-    courses String
-    createdAt DateTime @default(now())
-    updateAt DateTime @updatedAt
-
+    courses       courses[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
 }
 
 model teachers {
-    id Int @id @default(autoincrement())
-    name String
-    cnic Int  @unique
-    teacherid String
+    id            Int       @id @default(autoincrement())
+    name          String
+    cnic          Int       @unique
+    teacherid     String
     qualification String
-    gender String
-    courses String
-    createdAt DateTime @default(now())
-    updateAt DateTime @updatedAt
-
+    gender        String
+    courses       courses[]
+    createdAt     DateTime  @default(now())
+    updateAt      DateTime  @updatedAt
 }
-model classes {
-    id Int @id @default(autoincrement())
-    name String
-    semester Int 
-    section String
-    shift String
-    classroom String @unique
-    classtime String
-    teacher String
-    createdAt DateTime @default(now())
-    updateAt DateTime @updatedAt
 
+model classes {
+    id        Int      @id @default(autoincrement())
+    name      String
+    semester  Int
+    section   String
+    shift     String
+    classroom String   @unique
+    classtime String
+    teacher   String
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
 }
 
 model reports {
-    id Int @id @default(autoincrement())
-    name String
-    email String 
+    id            Int      @id @default(autoincrement())
+    name          String
+    email         String
     class_section String
-    aridno String
-    degree String @unique
-    review String
-    createdAt DateTime @default(now())
-    updateAt DateTime @updatedAt
+    aridno        String
+    degree        String   @unique
+    review        String
+    createdAt     DateTime @default(now())
+    updateAt      DateTime @updatedAt
+}
 
+model courses {
+    id          Int        @id @default(autoincrement())
+    name        String
+    description String?
+    students    students[]
+    teachers    teachers[]
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
 }

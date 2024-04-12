@@ -1,7 +1,7 @@
+import React, { useState, useMemo } from 'react';
 import {
   Flex,
   Table,
-  Checkbox,
   Tbody,
   Td,
   Text,
@@ -9,21 +9,31 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  Icon,
   Button,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  useDisclosure
+} from '@chakra-ui/react'
 import {
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
 } from "react-table";
-import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 export default function CheckTable(props) {
   const { columnsData, tableData } = props;
 
@@ -52,6 +62,18 @@ export default function CheckTable(props) {
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [name, setName] = useState('');
+  const [cnic, setCnic] = useState('');
+  const [teacherId, setTeacherId] = useState('');
+  const [qualification, setQualification] = useState('');
+  const [gender, setGender] = useState('');
+  const [courses, setCourses] = useState('');
+
+  const handleSubmit = () => {
+    // Handle form submission here
+  };
   return (
     <Card
       direction="column"
@@ -68,7 +90,7 @@ export default function CheckTable(props) {
         >
           All Teachers
         </Text>
-        <Menu />
+        <Button colorScheme="blue" size="sm" onClick={onOpen}>+ Add</Button>
       </Flex>
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>
@@ -146,16 +168,16 @@ export default function CheckTable(props) {
                   else if (cell.column.Header === "Courses") {
                     data = (
                       <ul>
-                          {cell.value.map((course, index) => (
+                        {cell.value.map((course, index) => (
                           <li key={index}>
                             <Text color={textColor} fontSize="sm" fontWeight="700">
-                            {course}
+                              {course}
                             </Text>
                           </li>
-                          ))}
+                        ))}
                       </ul>
                     );
-                  } 
+                  }
                   return (
                     <Td
                       {...cell.getCellProps()}
@@ -169,16 +191,66 @@ export default function CheckTable(props) {
                   );
                 })}
                 <Td>
+                  <div style={{ display: 'flex', gap: "5px" }}>
                     <Button colorScheme="blue" size="sm">Update</Button>
-                    </Td>
-                    <Td>
                     <Button colorScheme="blue" size="sm">Delete</Button>
-                    </Td>
+                  </div>
+                </Td>
               </Tr>
             );
           })}
         </Tbody>
       </Table>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Teacher</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input value={name} onChange={(e) => setName(e.target.value)} />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>CNIC</FormLabel>
+              <Input type="number" value={cnic} onChange={(e) => setCnic(e.target.value)} />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Teacher ID</FormLabel>
+              <Input value={teacherId} onChange={(e) => setTeacherId(e.target.value)} />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Qualification</FormLabel>
+              <Input value={qualification} onChange={(e) => setQualification(e.target.value)} />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Gender</FormLabel>
+              <Select value={gender} onChange={(e) => setGender(e.target.value)}>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </Select>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Courses</FormLabel>
+              <Input value={courses} onChange={(e) => setCourses(e.target.value)} />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Add
+            </Button>
+            <Button variant="outline" onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Card>
   );
 }

@@ -16,7 +16,9 @@
     "format": "^0.2.2",
     "list": "^2.0.19",
     "mysql2": "^3.9.2",
-    "nodemon": "^3.1.0",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
     "prisma": "^5.11.0"
   }
 }
