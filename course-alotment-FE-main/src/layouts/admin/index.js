@@ -5,6 +5,7 @@ import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
 
@@ -120,6 +121,8 @@ export default function Dashboard(props) {
             setToggleSidebar,
           }}
         >
+          <Toaster />
+
           <Sidebar routes={routes} display="none" {...rest} />
           <Box
             float="right"

@@ -2,7 +2,11 @@ const { PrismaClient } = require('@prisma/client');
 const express = require('express');
 const app = express();
 const prisma = new PrismaClient();
+const cors = require('cors');
+
 app.use(express.json());
+app.use(cors());
+
 //Total students in dashbord
 //const getStudents(){
 // return  app.get("/getStudents", async (req,res) => {

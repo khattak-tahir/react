@@ -6,6 +6,7 @@ import {
   MdOutlineSchool,
   MdOutlineTableChart,
   MdBugReport,
+  MdBook,
   MdCoPresent,
 } from "react-icons/md";
 
@@ -15,6 +16,7 @@ import TeachersTable from "views/admin/teachers";
 import StudentsTable from "views/admin/students";
 import ClassesTable from "views/admin/classes";
 import ReportsTable from "views/admin/reports";
+import CoursesTable from "views/admin/courses";
 
 const routes = [
   {
@@ -53,6 +55,13 @@ const routes = [
     ),
     path: "/classes",
     component: ClassesTable,
+  },
+  {
+    name: "Courses",
+    layout: "/admin",
+    icon: <Icon as={MdBook} width="20px" height="20px" color="inherit" />,
+    path: "/courses",
+    component: CoursesTable,
   },
   {
     name: "Reports",
