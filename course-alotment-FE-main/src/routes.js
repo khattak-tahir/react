@@ -27,20 +27,18 @@ const routes = [
     component: MainDashboard,
   },
   {
+    name: "Courses",
+    layout: "/admin",
+    icon: <Icon as={MdBook} width="20px" height="20px" color="inherit" />,
+    path: "/courses",
+    component: CoursesTable,
+  },
+  {
     name: "Teachers",
     layout: "/admin",
     icon: <Icon as={MdCoPresent} width="20px" height="20px" color="inherit" />,
     path: "/teachers",
     component: TeachersTable,
-  },
-  {
-    name: "Students",
-    layout: "/admin",
-    icon: (
-      <Icon as={MdOutlineSchool} width="20px" height="20px" color="inherit" />
-    ),
-    path: "/students",
-    component: StudentsTable,
   },
   {
     name: "Classes",
@@ -57,12 +55,16 @@ const routes = [
     component: ClassesTable,
   },
   {
-    name: "Courses",
+    name: "Students",
     layout: "/admin",
-    icon: <Icon as={MdBook} width="20px" height="20px" color="inherit" />,
-    path: "/courses",
-    component: CoursesTable,
+    icon: (
+      <Icon as={MdOutlineSchool} width="20px" height="20px" color="inherit" />
+    ),
+    path: "/students",
+    component: StudentsTable,
   },
+
+
   // {
   //   name: "Reports",
   //   layout: "/admin",
