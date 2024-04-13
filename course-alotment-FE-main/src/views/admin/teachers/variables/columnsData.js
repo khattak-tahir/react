@@ -1,5 +1,9 @@
 export const columnsDataCheck = [
   {
+    Header: "ID",
+    accessor: "id",
+  },
+  {
     Header: "NAME",
     accessor: "name",
   },
@@ -23,5 +27,8 @@ export const columnsDataCheck = [
     Header: "Courses",
     accessor: "Courses",
   },
-
+  {
+    Header: "",
+    accessor: "actions",
+  },
 ];

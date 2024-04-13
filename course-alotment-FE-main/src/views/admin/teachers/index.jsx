@@ -1,7 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import CheckTable from "views/admin/teachers/components/CheckTable";
 import { columnsDataCheck } from "views/admin/teachers/variables/columnsData";
-import tableDataCheck from "views/admin/teachers/variables/tableDataCheck.json";
 import React from "react";
 
 export default function Teachers() {
@@ -12,7 +11,7 @@ export default function Teachers() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
+        <CheckTable columnsData={columnsDataCheck} />
       </SimpleGrid>
     </Box>
   );

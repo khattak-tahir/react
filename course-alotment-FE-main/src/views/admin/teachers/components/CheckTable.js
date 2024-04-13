@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Table,
@@ -10,6 +10,13 @@ import {
   Tr,
   useColorModeValue,
   Button,
+  TableCaption,
+  TableContainer,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -22,58 +29,116 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Select,
-  useDisclosure
-} from '@chakra-ui/react'
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import Select from 'react-select';
 
 // Custom components
 import Card from "components/card/Card";
+
 export default function CheckTable(props) {
-  const { columnsData, tableData } = props;
-
-  const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
-
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    initialState,
-  } = tableInstance;
-  initialState.pageSize = 11;
-
-  const textColor = useColorModeValue("secondaryGray.900", "white");
-  const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { columnsData } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const [teachersData, setTeachersData] = useState([]);
   const [name, setName] = useState('');
   const [cnic, setCnic] = useState('');
-  const [teacherId, setTeacherId] = useState('');
+  const [teacherid, setTeacherid] = useState('');
   const [qualification, setQualification] = useState('');
   const [gender, setGender] = useState('');
-  const [courses, setCourses] = useState('');
+  const [operationType, setOperationType] = useState('add');
+  const [teacherId, setTeacherId] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [selectedCourses, setSelectedCourses] = useState([]);
 
-  const handleSubmit = () => {
-    // Handle form submission here
+  useEffect(() => {
+    fetchTeachers();
+    fetchCourses()
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/courses');
+      setCourses(response.data);
+    } catch (error) {
+      toast.error('Failed to fetch courses');
+    }
   };
+
+  const fetchTeachers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/getTeachers');
+      setTeachersData(response.data);
+    } catch (error) {
+      toast.error('Failed to fetch teachers');
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const teacherData = {
+        name,
+        cnic: parseInt(cnic, 10),
+        teacherid,
+        qualification,
+        gender: gender.value,
+        courses: selectedCourses.map(option => option.value),
+      };
+      if (operationType === 'add') {
+        await axios.post('http://localhost:3001/addTeachers', teacherData);
+        toast.success('Teacher added successfully');
+      } else if (operationType === 'update') {
+        await axios.put(`http://localhost:3001/teachers/${teacherId}`, teacherData);
+        toast.success('Teacher updated successfully');
+      }
+      fetchTeachers();
+      setIsOpen(false);
+      setName("");
+      setCnic("");
+      setTeacherid("");
+      setQualification("");
+      setGender("");
+      setOperationType('add');
+      setTeacherId(null);
+      setSelectedCourses([]);
+    } catch (error) {
+      toast.error('Failed to perform operation');
+    }
+  };
+
+  const deleteTeacher = async (teacherId) => {
+    try {
+      await axios.delete(`http://localhost:3001/teachers/${teacherId}`);
+      toast.success('Teacher deleted successfully');
+      fetchTeachers();
+    } catch (error) {
+      toast.error('Failed to delete teacher');
+    }
+  };
+
+  const openModalForUpdate = (teacher) => {
+    setOperationType('update');
+    setTeacherId(teacher.id);
+    setName(teacher.name);
+    setCnic(teacher.cnic);
+    setTeacherid(teacher.teacherid);
+    setQualification(teacher.qualification);
+    setGender({
+      label: teacher.gender,
+      value: teacher.gender
+    });
+    const selectedCourseObjects = teacher.courses.map(item => {
+      return {
+        value: item,
+        label: item
+      }
+    });
+    setSelectedCourses(selectedCourseObjects);
+
+    setIsOpen(true);
+  };
+
+  const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
     <Card
       direction="column"
@@ -90,122 +155,53 @@ export default function CheckTable(props) {
         >
           All Teachers
         </Text>
-        <Button colorScheme="blue" size="sm" onClick={onOpen}>+ Add</Button>
+        <Button colorScheme="blue" size="sm" onClick={() => setIsOpen(true)}>+ Add</Button>
       </Flex>
-      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
-        <Thead>
-          {headerGroups.map((headerGroup, index) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
-                  <Flex
-                    justify="space-between"
-                    align="center"
-                    fontSize={{ sm: "10px", lg: "12px" }}
-                    color="gray.400"
-                  >
-                    {column.render("Header")}
-                  </Flex>
-                </Th>
-              ))}
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
-                  let data = "";
-                  if (cell.column.Header === "NAME") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "CNIC") {
-                    data = (
-                      <Flex align="center">
-                        <Text
-                          me="10px"
-                          color={textColor}
-                          fontSize="sm"
-                          fontWeight="700"
-                        >
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "TeacherID") {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "Qualification") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "Gender") {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  }
-                  else if (cell.column.Header === "Courses") {
-                    data = (
-                      <ul>
-                        {cell.value.map((course, index) => (
-                          <li key={index}>
-                            <Text color={textColor} fontSize="sm" fontWeight="700">
-                              {course}
-                            </Text>
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                  }
+      <TableContainer>
+        <Table variant='simple'>
+          <TableCaption>Table for all the teachers</TableCaption>
+          <Thead>
+            <Tr>
+              {
+                columnsData.map((items) => {
                   return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
-                  );
-                })}
+                    <Th key={items.Header}>{items.Header}</Th>
+                  )
+                })
+              }
+            </Tr>
+          </Thead>
+          <Tbody>
+            {
+              teachersData.map(items => <Tr key={items.name}>
+                <Td>{items.id}</Td>
+                <Td>{items.name}</Td>
+                <Td>{items.cnic}</Td>
+                <Td>{items.teacherid}</Td>
+                <Td>{items.qualification}</Td>
+                <Td>{items.gender}</Td>
                 <Td>
-                  <div style={{ display: 'flex', gap: "5px" }}>
-                    <Button colorScheme="blue" size="sm">Update</Button>
-                    <Button colorScheme="blue" size="sm">Delete</Button>
+                  {items.courses.map((course, index) => (
+                    <span key={index} style={{ display: 'block', marginBottom: '5px' }}>• {course}</span>
+                  ))}
+                </Td>
+                <Td>
+                  <div style={{ display: 'flex', gap: "10px" }}>
+                    <Button colorScheme="blue" size="sm" onClick={() => openModalForUpdate(items)}>Update</Button>
+                    <Button colorScheme="red" size="sm" onClick={() => deleteTeacher(items.id)}>Delete</Button>
                   </div>
                 </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+              </Tr>)
+            }
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+          </Tbody>
+        </Table>
+      </TableContainer>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Teacher</ModalHeader>
+          <ModalHeader>{operationType === 'add' ? 'Add Teacher' : 'Update Teacher'}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
@@ -215,12 +211,21 @@ export default function CheckTable(props) {
 
             <FormControl mt={4}>
               <FormLabel>CNIC</FormLabel>
-              <Input type="number" value={cnic} onChange={(e) => setCnic(e.target.value)} />
+              <NumberInput value={cnic} onChange={(valueString, value) => {
+                const filteredValue = valueString.replace(/[-+]/g, '');
+                setCnic(filteredValue);
+              }}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Teacher ID</FormLabel>
-              <Input value={teacherId} onChange={(e) => setTeacherId(e.target.value)} />
+              <Input value={teacherid} onChange={(e) => setTeacherid(e.target.value)} />
             </FormControl>
 
             <FormControl mt={4}>
@@ -230,27 +235,43 @@ export default function CheckTable(props) {
 
             <FormControl mt={4}>
               <FormLabel>Gender</FormLabel>
-              <Select value={gender} onChange={(e) => setGender(e.target.value)}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </Select>
+              <Select
+                value={gender}
+                name="gender"
+                options={[
+                  { value: 'Male', label: 'Male' },
+                  { value: 'Female', label: 'Female' },
+                ]}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                isSearchable={false}
+                onChange={(e) => setGender(e)}
+              />
             </FormControl>
 
             <FormControl mt={4}>
               <FormLabel>Courses</FormLabel>
-              <Input value={courses} onChange={(e) => setCourses(e.target.value)} />
+              <Select
+                value={selectedCourses}
+                name="courseds"
+                options={courses.map(items => ({ value: items.name, label: items.name }))}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={(e) => setSelectedCourses(e)}
+                isMulti
+              />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Add
+              {operationType === 'add' ? 'Add' : 'Update'}
             </Button>
-            <Button variant="outline" onClick={onClose}>Close</Button>
+            <Button variant="outline" onClick={() => setIsOpen(false)}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
+
     </Card>
   );
 }

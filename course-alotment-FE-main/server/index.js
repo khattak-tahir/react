@@ -87,14 +87,16 @@ app.post("/addTeachers", async (req, res) => {
     res.json(addnewteacher);
 });
 
-app.put("/:id", async (req, res) => {
-    const id = req.params.id;
-    const newage = req.body.age;
-    const updateteacher = await prisma.teachers.update({ where: { id: parseInt(id) }, data: { age: newage }, });
-    res.json(updateteacher);
+app.put("/teachers/:id", async (req, res) => {
+    const teacherId = parseInt(req.params.id);
+    const updatedTeacher = await prisma.teachers.update({
+        where: { id: teacherId },
+        data: req.body
+    });
+    res.json(updatedTeacher);
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/teachers/:id", async (req, res) => {
     const id = req.params.id;
 
     const deleteteacher = await prisma.teachers.delete(

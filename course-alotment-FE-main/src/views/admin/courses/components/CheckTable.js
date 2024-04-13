@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Table,
@@ -12,7 +12,6 @@ import {
   Button,
   TableCaption,
   TableContainer,
-  Tfoot,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -26,9 +25,6 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import {
-  useTable,
-} from "react-table";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
@@ -154,17 +150,6 @@ export default function CheckTable(props) {
             }
 
           </Tbody>
-          <Tfoot>
-            <Tr>
-              {
-                columnsData.map(items => {
-                  return (
-                    <Th key={items.Header}>{items.Header}</Th>
-                  )
-                })
-              }
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
 
