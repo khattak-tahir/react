@@ -7,6 +7,18 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
+// Dashboard
+app.get("/dashboard", async (req, res) => {
+    const students = await prisma.students.findMany();
+    const teachers = await prisma.teachers.findMany();
+    const courses = await prisma.courses.findMany();
+    const classes = await prisma.classes.findMany();
+
+    res.json({
+        students: students.length, teachers: teachers.length, courses: courses.length, classes: classes.length
+    });
+});
+
 // Students
 app.post("/students", async (req, res) => {
     const students = await prisma.students.create({

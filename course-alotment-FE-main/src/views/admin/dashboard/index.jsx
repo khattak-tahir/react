@@ -1,36 +1,32 @@
 import { Box, Icon, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import axios from "axios";
 // Custom components
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
-import {  MdBugReport, MdCoPresent, MdOutlineSchool, MdOutlineTableChart,  } from "react-icons/md";
-//import getStudents, getteacher from 'demoprisma' all the API functions
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import {  MdBook, MdCoPresent, MdOutlineSchool, MdOutlineTableChart,  } from "react-icons/md";
 
 export default function UserReports() {
-  // const [totalStudent, setTotalStudent] = useState(0);
-  // const [totalTeacher, setTotalTeacher] = useState(0);
-
-  /* useEffect(()=>{
-        getData();
-  },[]) */
-
-  /*
-  const getData(){
-    getTotalStudent().then((res)=>{
-        setTotalStudent(res.data);
-    });
-    getTotalTeacher().then((res)=>{
-      setTotalTeacher(res.data);
-    })
-    });
-  }
-  */
-
-
-  // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
+  const [dashboardData, setDashboardData] = useState([])
+
+  const getDashboardData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/dashboard');
+      setDashboardData(response.data);
+    } catch (error) {
+      toast.error('Failed to fetch classes');
+    }
+  }
+
+  useEffect(() => {
+    getDashboardData()
+  }, [])
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       {/*Cards*/}
@@ -51,7 +47,7 @@ export default function UserReports() {
             />
           }
           name="Total Students"
-          value="3" //{totalStudent}
+          value={dashboardData.students}
         />
         <MiniStatistics
           startContent={
@@ -65,7 +61,8 @@ export default function UserReports() {
             />
           }
           name="Total Teachers"
-          value="4"
+          value={dashboardData.teachers}
+
         />
 
         <MiniStatistics
@@ -81,7 +78,7 @@ export default function UserReports() {
             />
           }
           name="Total Classes"
-          value="6"
+          value={dashboardData.classes}
         />
 
         <MiniStatistics
@@ -91,19 +88,19 @@ export default function UserReports() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdBugReport} color={brandColor} />
+                <Icon w="32px" h="32px" as={MdBook} color={brandColor} />
               }
             />
           }
-          name="Total Reports"
-          value="3"
+          name="Total Courses"
+          value={dashboardData.courses}
         />
       </SimpleGrid>
 
       {/*Calender*/}
-      <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
+      {/* <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
         <MiniCalendar h="100%" minW="100%" selectRange={false} />
-      </SimpleGrid>
+      </SimpleGrid> */}
     </Box>
   );
 }
