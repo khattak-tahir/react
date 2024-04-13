@@ -1,5 +1,9 @@
 export const columnsDataCheck = [
   {
+    Header: "ID",
+    accessor: "id",
+  },
+  {
     Header: "NAME",
     accessor: "name",
   },
@@ -8,7 +12,7 @@ export const columnsDataCheck = [
     accessor: "cnic",
   },
   {
-    Header: "Arid no",
+    Header: "ARID NO",
     accessor: "Arid no",
   },
   {
@@ -16,12 +20,27 @@ export const columnsDataCheck = [
     accessor: "Degree",
   },
   {
-    Header: "Class/Section",
-    accessor: "Class/Section",
+    Header: "SHIFT",
+    accessor: "shift",
   },
   {
-    Header: "Courses",
+    Header: "SEMESTER",
+    accessor: "semester",
+  },
+  {
+    Header: "SECTION",
+    accessor: "section",
+  },
+  {
+    Header: "COURSES",
     accessor: "Courses",
   },
-
+  {
+    Header: "CLASSES INFO",
+    accessor: "classesInfo",
+  },
+  {
+    Header: "",
+    accessor: "actions",
+  },
 ];

@@ -242,8 +242,6 @@ export default function CheckTable(props) {
                   { value: 'Male', label: 'Male' },
                   { value: 'Female', label: 'Female' },
                 ]}
-                className="basic-multi-select"
-                classNamePrefix="select"
                 isSearchable={false}
                 onChange={(e) => setGender(e)}
               />

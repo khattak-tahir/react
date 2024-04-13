@@ -7,72 +7,46 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
-//Total students in dashbord
-//const getStudents(){
-// return  app.get("/getStudents", async (req,res) => {
-
-//Total students in dashbord
-app.get("/getTotalStudents", async (req, res) => {
-    const Totalstudents = await prisma.students.count();
-    res.json(Totalstudents);
-});
-//}
-
-//Total Teachers in dashboard
-app.get("/getTotalTeachers", async (req, res) => {
-    const Totalteachers = await prisma.teachers.count();
-    res.json(Totalteachers);
+// Students
+app.post("/students", async (req, res) => {
+    const students = await prisma.students.create({
+        data: req.body
+    });
+    res.json(students);
 });
 
-
-//Total classes in dashboard
-app.get("/getTotalClasses", async (req, res) => {
-    const Totalclasses = await prisma.classes.count();
-    res.json(Totalclasses);
+app.get("/students", async (req, res) => {
+    const students = await prisma.students.findMany();
+    res.json(students);
 });
 
-
-//Total reports in dashboard
-app.get("/getTotalreports", async (req, res) => {
-    const Totalreports = await prisma.reports.count();
-    res.json(Totalreports);
+app.get("/students/:id", async (req, res) => {
+    const studentsId = parseInt(req.params.id);
+    const students = await prisma.students.findUnique({
+        where: { id: studentsId }
+    });
+    res.json(students);
 });
 
+app.put("/students/:id", async (req, res) => {
+    const studentsId = parseInt(req.params.id);
+    const students = await prisma.students.update({
+        where: { id: studentsId },
+        data: req.body
+    });
+    res.json(students);
+});
 
-// Student CRUD operation in student table
-
-
-app.get("/getStudents", async (req, res) => {
-    const getstudents = await prisma.students.findMany();
-    res.json(getstudents);
+app.delete("/students/:id", async (req, res) => {
+    const studentsId = parseInt(req.params.id);
+    const students = await prisma.students.delete({
+        where: { id: studentsId }
+    });
+    res.json(students);
 });
 
 
-app.post("/", async (req, res) => {
-
-    const newstudent = await prisma.students.create({ data: req.body });
-    res.json(newstudent);
-});
-
-app.put("/:id", async (req, res) => {
-    const id = req.params.id;
-    const newage = req.body.age;
-    const updatestudent = await prisma.students.update({ where: { id: parseInt(id) }, data: { age: newage }, });
-    res.json(updatestudent);
-});
-
-app.delete("/:id", async (req, res) => {
-    const id = req.params.id;
-
-    const deletestudent = await prisma.students.delete(
-        {
-            where: { id: parseInt(id) },
-        });
-    res.json(deletestudent);
-});
-
-
-// Teachers CRUD operation in Teachers table
+// Teachers
 app.get("/getTeachers", async (req, res) => {
     const getteachers = await prisma.teachers.findMany();
     res.json(getteachers);
@@ -105,7 +79,7 @@ app.delete("/teachers/:id", async (req, res) => {
 });
 
 
-// Classes CRUD operation in Teachers table
+// Classes
 app.post("/classes", async (req, res) => {
     const classes = await prisma.classes.create({
         data: req.body
