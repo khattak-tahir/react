@@ -63,13 +63,13 @@ const routes = [
     path: "/courses",
     component: CoursesTable,
   },
-  {
-    name: "Reports",
-    layout: "/admin",
-    icon: <Icon as={MdBugReport} width="20px" height="20px" color="inherit" />,
-    path: "/reports",
-    component: ReportsTable,
-  },
+  // {
+  //   name: "Reports",
+  //   layout: "/admin",
+  //   icon: <Icon as={MdBugReport} width="20px" height="20px" color="inherit" />,
+  //   path: "/reports",
+  //   component: ReportsTable,
+  // },
 ];
 
 export default routes;

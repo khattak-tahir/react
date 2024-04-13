@@ -73,8 +73,6 @@ app.delete("/:id", async (req, res) => {
 
 
 // Teachers CRUD operation in Teachers table
-
-
 app.get("/getTeachers", async (req, res) => {
     const getteachers = await prisma.teachers.findMany();
     res.json(getteachers);
@@ -107,36 +105,42 @@ app.delete("/teachers/:id", async (req, res) => {
 });
 
 
-// Teachers CRUD operation in Teachers table
-
-
-app.get("/getClass", async (req, res) => {
-    const getclass = await prisma.classes.findMany();
-    res.json(getclass);
+// Classes CRUD operation in Teachers table
+app.post("/classes", async (req, res) => {
+    const classes = await prisma.classes.create({
+        data: req.body
+    });
+    res.json(classes);
 });
 
-
-app.post("/addClass", async (req, res) => {
-
-    const addnewclass = await prisma.classes.create({ data: req.body });
-    res.json(addnewclass);
+app.get("/classes", async (req, res) => {
+    const classes = await prisma.classes.findMany();
+    res.json(classes);
 });
 
-app.put("/:id", async (req, res) => {
-    const id = req.params.id;
-    const newage = req.body.age;
-    const updateclasses = await prisma.classes.update({ where: { id: parseInt(id) }, data: { age: newage }, });
-    res.json(updateclasses);
+app.get("/classes/:id", async (req, res) => {
+    const classesId = parseInt(req.params.id);
+    const classes = await prisma.classes.findUnique({
+        where: { id: classesId }
+    });
+    res.json(classes);
 });
 
-app.delete("/:id", async (req, res) => {
-    const id = req.params.id;
+app.put("/classes/:id", async (req, res) => {
+    const classesId = parseInt(req.params.id);
+    const classes = await prisma.classes.update({
+        where: { id: classesId },
+        data: req.body
+    });
+    res.json(classes);
+});
 
-    const deleteclasses = await prisma.classes.delete(
-        {
-            where: { id: parseInt(id) },
-        });
-    res.json(deleteclasses);
+app.delete("/classes/:id", async (req, res) => {
+    const classesId = parseInt(req.params.id);
+    const classes = await prisma.classes.delete({
+        where: { id: classesId }
+    });
+    res.json(classes);
 });
 
 // Courses

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 
 export default function AdminNavbar(props) {
-	const [ scrolled, setScrolled ] = useState(false);
+	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
 		window.addEventListener('scroll', changeNavbar);
@@ -90,13 +90,13 @@ export default function AdminNavbar(props) {
 				<Box mb={{ sm: '8px', md: '0px' }}>
 					<Breadcrumb>
 						<BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-							<BreadcrumbLink href='#' color={secondaryText}>
+							<BreadcrumbLink href='/' color={secondaryText}>
 								Pages
 							</BreadcrumbLink>
 						</BreadcrumbItem>
 
 						<BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-							<BreadcrumbLink href='#' color={secondaryText}>
+							<BreadcrumbLink href='/' color={secondaryText}>
 								{brandText}
 							</BreadcrumbLink>
 						</BreadcrumbItem>

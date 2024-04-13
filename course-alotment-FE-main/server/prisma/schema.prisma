@@ -34,12 +34,13 @@ model teachers {
 model classes {
     id        Int      @id @default(autoincrement())
     name      String
-    semester  Int
+    semester  String
     section   String
     shift     String
     classroom String   @unique
     classtime String
     teacher   String
+    course    String
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
 }

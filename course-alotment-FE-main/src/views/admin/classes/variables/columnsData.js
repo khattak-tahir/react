@@ -1,32 +1,43 @@
 export const columnsDataCheck = [
   {
-    Header: "Class NAME",
+    Header: "ID",
+    accessor: "id",
+  },
+  {
+    Header: "CLASS NAME",
     accessor: "Class Name",
   },
   {
-    Header: "Semester",
+    Header: "SEMESTER",
     accessor: "Semester",
   },
-  
+
   {
-    Header: "Section",
+    Header: "SECTION",
     accessor: "Section",
   },
   {
-    Header: "Shift",
+    Header: "SHIFT",
     accessor: "Shift",
   },
   {
-    Header: "Classroom",
+    Header: "CLASSROOM",
     accessor: "Classroom",
   },
   {
-    Header: "Class Time",
+    Header: "CLASS TIME",
     accessor: "Class Time",
   },
   {
-    Header: "Teacher",
+    Header: "TEACHER",
     accessor: "Teacher",
   },
- 
+  {
+    Header: "COURSE",
+    accessor: "Course",
+  },
+  {
+    Header: "",
+    accessor: "action",
+  },
 ];
