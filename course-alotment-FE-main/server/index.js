@@ -115,10 +115,9 @@ app.post('/import-classes', upload.single('file'), async (req, res) => {
         if (SECTION !== 'A' && SECTION !== 'B' && SECTION !== 'C' && SECTION !== 'D') continue;
 
         const teacher = await prisma.teachers.findUnique({ where: { id: parseInt(TEACHER_ID) } });
+        const course = teacher.courses.find(fl => fl.course === COURSE_CODE)
 
-        const course = await prisma.courses.findFirst({
-            where: { course_code: COURSE_CODE },
-        });
+        console.log(course)
 
         if (!teacher || !course) continue;
         try {
