@@ -39,6 +39,7 @@ export default function CheckTable(props) {
   const [description, setDescription] = useState('');
   const [operationType, setOperationType] = useState('add');
   const [courseId, setCourseId] = useState(null);
+  const [courseCode, setCourseCode] = useState("");
 
   useEffect(() => {
     fetchCourses();
@@ -59,6 +60,7 @@ export default function CheckTable(props) {
         const newCourse = {
           name,
           description,
+          course_code: courseCode
         };
         await axios.post('http://localhost:3001/courses', newCourse);
         toast.success('Course added successfully');
@@ -66,6 +68,7 @@ export default function CheckTable(props) {
         const updatedCourse = {
           name,
           description,
+          course_code: courseCode
         };
         await axios.put(`http://localhost:3001/courses/${courseId}`, updatedCourse);
         toast.success('Course updated successfully');
@@ -73,6 +76,7 @@ export default function CheckTable(props) {
       fetchCourses();
       setIsOpen(false);
       setName("");
+      setCourseCode("");
       setDescription("");
       setOperationType('add');
       setCourseId(null);
@@ -95,6 +99,7 @@ export default function CheckTable(props) {
     setOperationType('update');
     setCourseId(course.id);
     setName(course.name);
+    setCourseCode(course.course_code);
     setDescription(course.description);
     setIsOpen(true);
   };
@@ -137,6 +142,7 @@ export default function CheckTable(props) {
               coursesData.map(items => <Tr key={items.name}>
                 <Td>{items.id}</Td>
                 <Td>{items.name}</Td>
+                <Td>{items.course_code}</Td>
                 <Td>{items.description}</Td>
                 <Td>{items.createdAt}</Td>
                 <Td>{items.updatedAt}</Td>
@@ -162,6 +168,11 @@ export default function CheckTable(props) {
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input value={name} onChange={(e) => setName(e.target.value)} />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Course Code</FormLabel>
+              <Input value={courseCode} onChange={(e) => setCourseCode(e.target.value)} />
             </FormControl>
 
             <FormControl mt={4}>

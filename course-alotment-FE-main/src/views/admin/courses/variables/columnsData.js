@@ -8,6 +8,10 @@ export const columnsDataCheck = [
     accessor: "name",
   },
   {
+    Header: "COURSE CODE",
+    accessor: "course_code",
+  },
+  {
     Header: "DESCRIPTION",
     accessor: "description",
   },

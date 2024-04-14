@@ -248,11 +248,11 @@ export default function CheckTable(props) {
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Courses</FormLabel>
+              <FormLabel>Course Code</FormLabel>
               <Select
                 value={selectedCourses}
-                name="courseds"
-                options={courses.map(items => ({ value: items.name, label: items.name }))}
+                name="course_code"
+                options={courses.map(items => ({ value: items.course_code, label: items.course_code }))}
                 className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(e) => setSelectedCourses(e)}

@@ -24,7 +24,7 @@ export const columnsDataCheck = [
     accessor: "Gender",
   },
   {
-    Header: "Courses",
+    Header: "Course Code",
     accessor: "Courses",
   },
   {

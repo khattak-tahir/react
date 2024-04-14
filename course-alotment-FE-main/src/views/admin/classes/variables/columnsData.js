@@ -33,7 +33,7 @@ export const columnsDataCheck = [
     accessor: "Teacher",
   },
   {
-    Header: "COURSE",
+    Header: "COURSE CODE",
     accessor: "Course",
   },
   {

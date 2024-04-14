@@ -63,6 +63,7 @@ model reports {
 model courses {
     id          Int      @id @default(autoincrement())
     name        String
+    course_code String   @unique
     description String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt

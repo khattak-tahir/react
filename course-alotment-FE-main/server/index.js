@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const prisma = new PrismaClient();
 const cors = require('cors');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 app.use(express.json());
 app.use(cors());
@@ -97,6 +99,47 @@ app.post("/classes", async (req, res) => {
         data: req.body
     });
     res.json(classes);
+});
+
+app.post('/import-classes', upload.single('file'), async (req, res) => {
+    const workbook = require('xlsx').readFile(req.file.path);
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const data = require('xlsx').utils.sheet_to_json(worksheet, { range: 2, header: 1, raw: false, blankrows: false });
+
+    for (const row of data) {
+        const [CLASS_NAME, SEMESTER, SECTION, SHIFT, CLASSROOM, CLASS_TIME, TEACHER_ID, COURSE_CODE] = row;
+
+        if (SHIFT !== 'EVENING' && SHIFT !== 'MORNING') continue;
+        if (SECTION !== 'A' && SECTION !== 'B' && SECTION !== 'C' && SECTION !== 'D') continue;
+
+        const teacher = await prisma.teachers.findUnique({ where: { id: parseInt(TEACHER_ID) } });
+
+        const course = await prisma.courses.findFirst({
+            where: { course_code: COURSE_CODE },
+        });
+
+        if (!teacher || !course) continue;
+        try {
+            await prisma.classes.create({
+                data: {
+                    name: CLASS_NAME,
+                    semester: SEMESTER,
+                    section: SECTION,
+                    shift: SHIFT,
+                    classroom: CLASSROOM,
+                    classtime: CLASS_TIME,
+                    teacher: teacher.name,
+                    course: course.course_code,
+                },
+            });
+        } catch (error) {
+            console.error('Error inserting class:', error);
+        }
+    }
+
+    res.json({ message: 'Classes added successfully' });
 });
 
 app.get("/classes", async (req, res) => {

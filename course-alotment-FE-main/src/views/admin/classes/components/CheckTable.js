@@ -138,6 +138,21 @@ export default function CheckTable(props) {
 
     return courses.map(course => ({ value: course, label: course }));
   }
+
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const toastId = toast.loading('Uploading...');
+
+    try {
+      const response = await axios.post('http://localhost:3001/import-classes', formData);
+      toast.dismiss(toastId);
+      toast.success('Classes added successfully');
+      fetchClasses();
+    } catch (error) {
+      toast.error('Failed to upload file');
+    }
+  };
   return (
     <Card
       direction="column"
@@ -154,7 +169,26 @@ export default function CheckTable(props) {
         >
           All Classes
         </Text>
-        <Button colorScheme="blue" size="sm" onClick={() => setIsOpen(true)}>+ Add</Button>
+        <div style={{ display: 'flex', gap: "10px" }}>
+          <Button colorScheme="blue" size="sm" onClick={() => setIsOpen(true)}>+ Add</Button>
+          <Button
+            colorScheme="green"
+            size="sm"
+            onClick={() => document.getElementById('fileInput').click()}
+          >
+            Import Classes
+          </Button>
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              if (e.target.files[0]) {
+                uploadFile(e.target.files[0]);
+              }
+            }}
+          />
+        </div>
       </Flex>
       <TableContainer>
         <Table variant='simple'>
