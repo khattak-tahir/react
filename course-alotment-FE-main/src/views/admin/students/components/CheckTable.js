@@ -53,7 +53,7 @@ export default function CheckTable(props) {
   const [classesData, setClassesData] = useState([]);
   const [courses, setCourses] = useState([]);
 
-  const [shiftOptions, setShiftOptions] = useState([{ value: "Morning", label: "Morning" }, { value: "Evening", label: "Evening" }]);
+  const [shiftOptions, setShiftOptions] = useState([{ value: "MORNING", label: "MORNING" }, { value: "EVENING", label: "EVENING" }]);
   const [semesterOptions, setSemesterOptions] = useState([]);
   const [sectionOptions, setSectionOptions] = useState([]);
   const [courseOptions, setCourseOptions] = useState([]);

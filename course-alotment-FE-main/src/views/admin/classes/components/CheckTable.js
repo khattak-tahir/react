@@ -259,7 +259,7 @@ export default function CheckTable(props) {
               <Select
                 value={shift}
                 onChange={(e) => setShift(e)}
-                options={[{ value: "Morning", label: "Morning" }, { value: "Evening", label: "Evening" }]}
+                options={[{ value: "MORNING", label: "MORNING" }, { value: "EVENING", label: "EVENING" }]}
               />
             </FormControl>
 
