@@ -283,7 +283,7 @@ export default function CheckTable(props) {
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Course</FormLabel>
+              <FormLabel>Course Code</FormLabel>
               <Select
                 isDisabled={selectedTeacher ? false : true}
                 value={selectedCourse}

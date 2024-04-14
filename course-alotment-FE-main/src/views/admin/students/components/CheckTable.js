@@ -257,7 +257,7 @@ export default function CheckTable(props) {
                           <Th>Name</Th>
                           <Th>Classroom</Th>
                           <Th>Class Time</Th>
-                          <Th>Course</Th>
+                          <Th>Course Code</Th>
                         </Tr>
                       </Thead>
                       <Tbody>
@@ -386,7 +386,7 @@ export default function CheckTable(props) {
                         <Th>Name</Th>
                         <Th>Classroom</Th>
                         <Th>Class Time</Th>
-                        <Th>Course</Th>
+                        <Th>Course Code</Th>
                       </Tr>
                     </Thead>
                     <Tbody>

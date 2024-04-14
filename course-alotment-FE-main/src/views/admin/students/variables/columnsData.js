@@ -32,7 +32,7 @@ export const columnsDataCheck = [
     accessor: "section",
   },
   {
-    Header: "COURSES",
+    Header: "COURSE CODE",
     accessor: "Courses",
   },
   {
