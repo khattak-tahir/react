@@ -464,7 +464,7 @@ export default function CheckTable(props) {
             <Button colorScheme="green" mr={3} onClick={handlePasswordUpdate}>
               Save
             </Button>
-            <Button variant="outline" onClick={() => setNewPassword(false)}>Close</Button>
+            <Button variant="outline" onClick={() => setPasswordModal(false)}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

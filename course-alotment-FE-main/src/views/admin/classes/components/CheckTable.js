@@ -75,7 +75,7 @@ export default function CheckTable(props) {
     try {
       const classData = {
         name,
-        semester,
+        semester: semester.value,
         section: section.value,
         shift: shift.value,
         classroom,
@@ -121,7 +121,7 @@ export default function CheckTable(props) {
     setOperationType('update');
     setClassId(classData.id);
     setName(classData.name);
-    setSemester(classData.semester);
+    setSemester({ value: classData.semester, label: classData.semester });
     setSection({ value: classData.section, label: classData.section });
     setShift({ value: classData.shift, label: classData.shift });
     setClassroom(classData.classroom);
@@ -242,7 +242,13 @@ export default function CheckTable(props) {
 
             <FormControl mt={4}>
               <FormLabel>Semester</FormLabel>
-              <Input value={semester} onChange={(e) => setSemester(e.target.value)} />
+              <Select
+                value={semester}
+                onChange={(e) => {
+                  setSemester(e);
+                }}
+                options={[{ value: "1st", label: "1st" }, { value: "2nd", label: "2nd" }, { value: "3rd", label: "3rd" }, { value: "4th", label: "4th" }, { value: "5th", label: "5th" }, { value: "6th", label: "6th" }, { value: "7th", label: "7th" }, { value: "8th", label: "8th" }]}
+              />
             </FormControl>
 
             <FormControl mt={4}>
