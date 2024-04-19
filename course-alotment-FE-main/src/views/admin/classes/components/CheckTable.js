@@ -64,7 +64,7 @@ export default function CheckTable(props) {
 
   const fetchTeachers = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/getTeachers');
+      const response = await axios.get('http://localhost:3001/teachers');
       setTeachersData(response.data);
     } catch (error) {
       toast.error('Failed to fetch teachers');

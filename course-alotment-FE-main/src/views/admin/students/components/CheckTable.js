@@ -199,6 +199,36 @@ export default function CheckTable(props) {
     setIsOpen(true);
   };
 
+  const [passwordModal, setPasswordModal] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const openModalForPasswordUpdate = (student) => {
+    const { id } = student;
+
+    if (id) {
+      setStudentId(id);
+      setPasswordModal(true)
+    }
+  }
+
+  const handlePasswordUpdate = async () => {
+    try {
+      if (newPassword === "") {
+        toast.warning("Please type your new password!")
+        return;
+      }
+
+      await axios.put(`http://localhost:3001/students/password/${studentId}`, { password: newPassword });
+      toast.success('Password updated successfully');
+
+      fetchStudents();
+      setPasswordModal(false);
+      setStudentId(null);
+      setNewPassword("")
+    } catch (error) {
+      toast.error('Failed to perform operation');
+    }
+  };
+
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
@@ -215,13 +245,13 @@ export default function CheckTable(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          All Teachers
+          All Students
         </Text>
         <Button colorScheme="blue" size="sm" onClick={() => setIsOpen(true)}>+ Add</Button>
       </Flex>
       <TableContainer>
         <Table variant='simple'>
-          <TableCaption>Table for all the teachers</TableCaption>
+          <TableCaption>Table for all the students</TableCaption>
           <Thead>
             <Tr>
               {
@@ -238,6 +268,7 @@ export default function CheckTable(props) {
               studentsData.map(items => <Tr key={items.name}>
                 <Td>{items.id}</Td>
                 <Td>{items.name}</Td>
+                <Td>{items.password}</Td>
                 <Td>{items.cnic}</Td>
                 <Td>{items.aridno}</Td>
                 <Td>{items.degree}</Td>
@@ -276,6 +307,7 @@ export default function CheckTable(props) {
                 <Td>
                   <div style={{ display: 'flex', gap: "10px" }}>
                     <Button colorScheme="blue" size="sm" onClick={() => openModalForUpdate(items)}>Update</Button>
+                    <Button colorScheme="green" size="sm" onClick={() => openModalForPasswordUpdate(items)}>Change Password</Button>
                     <Button colorScheme="red" size="sm" onClick={() => deleteStudent(items.id)}>Delete</Button>
                   </div>
                 </Td>
@@ -412,6 +444,27 @@ export default function CheckTable(props) {
               {operationType === 'add' ? 'Add' : 'Update'}
             </Button>
             <Button variant="outline" onClick={() => setIsOpen(false)}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={passwordModal} onClose={() => setPasswordModal(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Change Password</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <FormLabel>New Password</FormLabel>
+              <Input value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="green" mr={3} onClick={handlePasswordUpdate}>
+              Save
+            </Button>
+            <Button variant="outline" onClick={() => setNewPassword(false)}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

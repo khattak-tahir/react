@@ -18,6 +18,7 @@ model students {
     section      String
     courses      Json
     classes_info Json
+    password     String   @default("12345678")
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 }
@@ -30,6 +31,7 @@ model teachers {
     qualification String
     gender        String
     courses       Json
+    password      String   @default("12345678")
     createdAt     DateTime @default(now())
     updateAt      DateTime @updatedAt
 }
