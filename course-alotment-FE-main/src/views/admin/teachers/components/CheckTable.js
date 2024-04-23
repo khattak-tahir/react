@@ -85,7 +85,7 @@ export default function CheckTable(props) {
         courses: selectedCourses.map(option => option.value),
       };
       if (operationType === 'add') {
-        await axios.post('http://localhost:3001/addTeachers', teacherData);
+        await axios.post('http://localhost:3001/teachers', teacherData);
         toast.success('Teacher added successfully');
       } else if (operationType === 'update') {
         await axios.put(`http://localhost:3001/teachers/${teacherId}`, teacherData);
