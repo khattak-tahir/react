@@ -6,6 +6,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import main from "./src/screens/main";
 import Verification from "./src/screens/Verification";
+import CoursesScreen from "./src/HomeScreens/CoursesScreen";
+import TeachersScreen from "./src/HomeScreens/TeachersScreen"
+import SettingsScreen from "./src/HomeScreens/SettingsScreen"
+import ContactScreen from "./src/HomeScreens/ContactScreen"
+
+
 // import { Feedback } from "./src/layouts/feedback.layout";
 
 const Stack = createNativeStackNavigator();
@@ -54,7 +60,34 @@ export default function App() {
 
         {/* <Stack.Screen name="feedback" component={Feedback} /> */}
         
-
+        <Stack.Screen
+          name="TeachersScreen"
+          component={TeachersScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="CoursesScreen"
+          component={CoursesScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SettingsScreen"
+          component={SettingsScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ContactScreen"
+          component={ContactScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
         
       </Stack.Navigator>
     </NavigationContainer>

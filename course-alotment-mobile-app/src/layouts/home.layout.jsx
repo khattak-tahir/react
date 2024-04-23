@@ -52,6 +52,7 @@ export const Home = ({ navigation }) => {
     { label: "Contact Us", icon: "contact", screen: "ContactScreen" },
     { label: "Settings", icon: "cog", screen: "SettingsScreen" }
   ];
+  
 
   return (
     <View style={styles.container}>
