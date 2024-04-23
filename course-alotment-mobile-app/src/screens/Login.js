@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import logo from '../../assets/images/mainlogo.png';
-import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { button1 } from "../common/button";
 import { label, input, formgroup } from "../common/formcss";
@@ -12,49 +11,34 @@ const Login = ({ navigation, route }) => {
     const [teacherid, setTeacherId] = useState("");
     const [aridno, setAridNo] = useState("");
     const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false); 
-    const toggleShowPassword = () => { setShowPassword(!showPassword);};
+    const [showPassword, setShowPassword] = useState(false);
+    const toggleShowPassword = () => { setShowPassword(!showPassword); };
 
     const handleLogin = async () => {
+        const endpoint = role === 'teacher' ? '/teacherlogin' : '/studentlogin';
+        const userId = role === 'teacher' ? teacherid : aridno;
+
         try {
-            if (role === 'teacher') {
-                const response= await axios({
-                    method: 'post',
-                    url: "http://localhost:3306/teachers_login",
-                    data: {
-                      teacherid: teacherid,
-                      password,
-                    }
-                  });
-                 console.log(response.data);
-                // Navigate to the main screen
+            const response = await fetch(`http://10.0.2.2${endpoint}`, {
+                [role === 'teacher' ? 'teacherId' : 'aridno']: userId,
+                password: password
+            });
+
+            if (response) {
                 navigation.navigate("main");
-            }
-             else if (role === 'student') {
-               const response= await axios({
-                    method: 'post',
-                    url: "http://localhost:3306/students_login",
-                    data: {
-                      aridno: aridno,
-                      password,
-                    }
-                  });
-                 console.log(response.data);
-                // Navigate to the main screen
-                navigation.navigate("main");
+            } else {
+                console.log('Login failed!');
             }
         } catch (error) {
-            // console.log(error.response.data);
-            alert("Invalid credentials");
+            console.error(error.message);
         }
     };
-
 
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
                 <View style={styles.s1}>
-                    <Image style={styles.logo}source={logo} />
+                    <Image style={styles.logo} source={logo} />
                 </View>
                 <View style={styles.s2}>
                     <Text style={styles.head1}>Login</Text>
@@ -65,10 +49,10 @@ const Login = ({ navigation, route }) => {
                         <TextInput
                             style={input}
                             placeholder={role === 'teacher' ? 'Enter your teacher id' : 'Enter your arid no'}
-                            onChangeText={(text) =>role==='teacher'? setTeacherId(text) : setAridNo(text)}
+                            onChangeText={(text) => role === 'teacher' ? setTeacherId(text) : setAridNo(text)}
                             required
                         />
-                    
+
                         <Text style={label}>Password</Text>
                         <TextInput
                             style={input}
@@ -77,13 +61,13 @@ const Login = ({ navigation, route }) => {
                             onChangeText={(text) => setPassword(text)}
                             required
                         />
-                      <MaterialCommunityIcons 
-                          name={showPassword ? 'eye' : 'eye-off'} 
-                          size={24} 
-                          color="#aaa"
-                          style={styles.icon} 
-                          onPress={toggleShowPassword} 
-                      /> 
+                        <MaterialCommunityIcons
+                            name={showPassword ? 'eye' : 'eye-off'}
+                            size={24}
+                            color="#aaa"
+                            style={styles.icon}
+                            onPress={toggleShowPassword}
+                        />
                     </View>
                     {/* <View style={styles.fp}>
                         <Text style={styles.link}>Forgot Password?</Text>
@@ -172,9 +156,9 @@ const styles = StyleSheet.create({
         color: "#777",
         marginBottom: 10,
     },
-    icon:{
+    icon: {
         marginLeft: 280,
-            
+
     },
 
     // link: {
