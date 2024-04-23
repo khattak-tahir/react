@@ -394,7 +394,57 @@ app.delete("/courses/:id", async (req, res) => {
         }
     }
 });
+// teacher login endpoint
+app.post("/teachers_login", async (req, res) => {
+    const { teacherid, password } = req.body;
+  
+    if (!teacherid || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+  
+    const teacher = await prisma.teachers.findUnique({
+      where: { teacherid: teacherid },
+    });
+  
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+  
+    const isPasswordValid = await compare(password.toString(), teacher.password.toString());
+  
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+  
+  
+    res.json({ teacher });
+  });
 
+  // Student login endpoint
+app.post("/students_login", async (req, res) => {
+    const { aridno, password } = req.body;
+  
+    if (!aridno || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+  
+    const student = await prisma.students.findUnique({
+      where: { aridNo: aridno },
+    });
+  
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+  
+    const isPasswordValid = await compare(password.toString(), student.password.toString());
+  
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+  
+  
+    res.json({ student });
+  });
 
 app.listen(3001, () =>
     console.log('server listening on port 3001'));

@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+// import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import logo from '../../assets/images/mainlogo.png';
 import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,46 +9,46 @@ import { label, input, formgroup } from "../common/formcss";
 
 const Login = ({ navigation, route }) => {
     const { role } = route.params;
-    const [email, setEmail] = useState("");
+    const [teacherid, setTeacherId] = useState("");
+    const [aridno, setAridNo] = useState("");
     const [password, setPassword] = useState("");
-    // const [showPassword, setShowPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false); 
-    const toggleShowPassword = () => { setShowPassword(!showPassword);
-
-    // const handleShowPassword = () => { setShowPassword(!showPassword); }
+    const toggleShowPassword = () => { setShowPassword(!showPassword);};
 
     const handleLogin = async () => {
         try {
             if (role === 'teacher') {
-                const response = await axios.post(
-                    "http://localhost:3306/teachers",
-                    {
-                        teacherid: email,
-                        password,
-                        role,
+                const response= await axios({
+                    method: 'post',
+                    url: "http://localhost:3306/teachers_login",
+                    data: {
+                      teacherid: teacherid,
+                      password,
                     }
-                );
-                console.log(response.data);
+                  });
+                 console.log(response.data);
                 // Navigate to the main screen
                 navigation.navigate("main");
-            } else if (role === 'student') {
-                const response = await axios.post(
-                    "http://localhost:3306/students",
-                    {
-                        aridNo: email,
-                        password,
-                        role,
+            }
+             else if (role === 'student') {
+               const response= await axios({
+                    method: 'post',
+                    url: "http://localhost:3306/students_login",
+                    data: {
+                      aridno: aridno,
+                      password,
                     }
-                );
-                console.log(response.data);
+                  });
+                 console.log(response.data);
                 // Navigate to the main screen
                 navigation.navigate("main");
             }
         } catch (error) {
-            console.log(error.response.data);
+            // console.log(error.response.data);
             alert("Invalid credentials");
         }
     };
+
 
     return (
         <View style={styles.container}>
@@ -60,15 +61,14 @@ const Login = ({ navigation, route }) => {
                     <Text style={styles.head2}>Sign in to continue</Text>
 
                     <View style={formgroup}>
-                        <Text style={label}>Email</Text>
+                        <Text style={label}>{role === 'teacher' ? 'Teacher ID' : 'Arid No'}</Text>
                         <TextInput
                             style={input}
-                            placeholder="Enter your email"
-                            onChangeText={(text) => setEmail(text)}
+                            placeholder={role === 'teacher' ? 'Enter your teacher id' : 'Enter your arid no'}
+                            onChangeText={(text) =>role==='teacher'? setTeacherId(text) : setAridNo(text)}
                             required
                         />
-                    </View>
-                    <View style={formgroup}>
+                    
                         <Text style={label}>Password</Text>
                         <TextInput
                             style={input}
@@ -157,13 +157,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
     },
-    fp: {
-        marginLeft: 180,
-        margin: 10,
-    },
     logo: {
         height: 300,
         width: 400,
+        marginTop: 60,
     },
     head1: {
         fontSize: 24,
@@ -175,6 +172,10 @@ const styles = StyleSheet.create({
         color: "#777",
         marginBottom: 10,
     },
+    icon:{
+        marginLeft: 280,
+            
+    },
 
     // link: {
     //   color: "red",
@@ -184,6 +185,6 @@ const styles = StyleSheet.create({
     //   margin: 10,
     // }
 });
-}
+
 
 export default Login;
