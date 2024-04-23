@@ -64,7 +64,7 @@ export default function CoursesScreen(props) {
   
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/react/course-alotment-FE-main/server/index/courses');
+        const response = await axios.get('http://192.168.94.85:3001/courses');
         setCoursesData(response.data);
       } catch (error) {
         toast.error('Failed to fetch courses');

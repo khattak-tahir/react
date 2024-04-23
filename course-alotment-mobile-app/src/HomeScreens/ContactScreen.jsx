@@ -7,30 +7,30 @@ const ContactUs = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSendMessage = () => {
-    fetch('http://localhost:3306/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        message,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        Alert.alert('Message Sent', 'Thank you for contacting us!');
-        setName('');
-        setEmail('');
-        setMessage('');
-      })
-      .catch(error => {
-        Alert.alert('Error', 'Failed to send message. Please try again later.');
-        console.error(error);
-      });
-  };
+  // const handleSendMessage = () => {
+  //   fetch('http://localhost:3306/send-email', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       name,
+  //       email,
+  //       message,
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       Alert.alert('Message Sent', 'Thank you for contacting us!');
+  //       setName('');
+  //       setEmail('');
+  //       setMessage('');
+  //     })
+  //     .catch(error => {
+  //       Alert.alert('Error', 'Failed to send message. Please try again later.');
+  //       console.error(error);
+  //     });
+  // };
 
   return (
     <View style={styles.container}>
@@ -58,7 +58,8 @@ const ContactUs = () => {
         numberOfLines={4}
       />
       {/* <Button style={button1}  title="Send Message" onPress={handleSendMessage} /> */}
-      <Text style={button1} onPress={handleSendMessage}>
+      <Text style={button1} >
+      {/* onPress={handleSendMessage} */}
             Send Message
           </Text>
     </View>

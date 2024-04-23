@@ -120,6 +120,7 @@ export function BottomNav({ navigation }) {
               </Text>
             </Center>
           </Pressable>
+          
         </HStack>
       </Box>
     </NativeBaseProvider>
