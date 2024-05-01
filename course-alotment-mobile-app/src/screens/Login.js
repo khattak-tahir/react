@@ -19,12 +19,13 @@ const Login = ({ navigation, route }) => {
         const userId = role === 'teacher' ? teacherid : aridno;
 
         try {
-            const response = await fetch(`http://192.168.94.85:3001${endpoint}`, {
+            const response = await fetch(`http://192.168.62.85:3001${endpoint}`, {
                 [role === 'teacher' ? 'teacherId' : 'aridno']: userId,
                 password: password
             });
 
             if (response) {
+                // console.log(response);
                 navigation.navigate("main");
             } else {
                 console.log('Login failed!');

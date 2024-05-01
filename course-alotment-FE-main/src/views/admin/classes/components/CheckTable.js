@@ -145,7 +145,7 @@ export default function CheckTable(props) {
     const toastId = toast.loading('Uploading...');
 
     try {
-      const response = await axios.post('http://localhost:3001/import-classes', formData);
+      await axios.post('http://localhost:3001/import-classes', formData);
       toast.dismiss(toastId);
       toast.success('Classes added successfully');
       fetchClasses();

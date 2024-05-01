@@ -430,7 +430,7 @@ app.post('/studentlogin', async (req, res) => {
     if (!aridno || !password) {
         return res.status(400).json({ message: "Aridno and password are required" });
     }
-
+    else{
     try {
         const student = await prisma.students.findUnique({
             where: {
@@ -450,6 +450,7 @@ app.post('/studentlogin', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "An error occurred", error: error.message });
     }
+}
 });
 
 
