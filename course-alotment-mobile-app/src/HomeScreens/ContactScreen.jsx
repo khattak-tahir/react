@@ -1,67 +1,157 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import {button1}from '../common/button';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Linking, Alert, ScrollView } from 'react-native'; 
+import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
-const ContactUs = () => {
+const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  // const handleSendMessage = () => {
-  //   fetch('http://localhost:3306/send-email', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       name,
-  //       email,
-  //       message,
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       Alert.alert('Message Sent', 'Thank you for contacting us!');
-  //       setName('');
-  //       setEmail('');
-  //       setMessage('');
-  //     })
-  //     .catch(error => {
-  //       Alert.alert('Error', 'Failed to send message. Please try again later.');
-  //       console.error(error);
-  //     });
-  // };
+  const sendEmail = () => {
+    const recipientEmail = 'tahirkhattak456@gmail.com';
+    const subject = 'New Message from ' + name;
+    const body = 'Name: ' + name + '\nEmail: ' + email + '\nMessage: ' + message;
+    const mailTo = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+    Linking.openURL(mailTo)
+      .then(() => {
+        // Email app opened
+        console.log('Email app opened');
+      })
+      .catch((err) => {
+        // Error handling
+        console.error('Failed to open email app:', err);
+        Alert.alert(
+          'Error',
+          'Failed to open email app. Please ensure that you have an email app installed and configured on your device.'
+        );
+      });
+  };
+
+  const openWebsite = () => {
+    const websiteURL = 'http://www.uaar.edu.pk';
+    Linking.openURL(websiteURL)
+      .then(() => {
+        // Website opened
+        console.log('Website opened');
+      })
+      .catch((err) => {
+        // Error handling
+        console.error('Failed to open website:', err);
+        Alert.alert(
+          'Error',
+          'Failed to open website. Please try again later.'
+        );
+      });
+  };
+
+  const openEmail = () => {
+    const emailAddress = 'cms@uaar.edu.pk';
+    Linking.openURL(`mailto:${emailAddress}`)
+      .then(() => {
+        // Email app opened
+        console.log('Email app opened');
+      })
+      .catch((err) => {
+        // Error handling
+        console.error('Failed to open email app:', err);
+        Alert.alert(
+          'Error',
+          'Failed to open email app. Please ensure that you have an email app installed and configured on your device.'
+        );
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.wavyBackground} />
-      <Text style={styles.header}>Contact Us</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Your Name"
-        value={name}
-        onChangeText={text => setName(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Your Email"
-        value={email}
-        onChangeText={text => setEmail(text)}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={[styles.input, styles.messageInput]}
-        placeholder="Your Message"
-        value={message}
-        onChangeText={text => setMessage(text)}
-        multiline
-        numberOfLines={4}
-      />
-      {/* <Button style={button1}  title="Send Message" onPress={handleSendMessage} /> */}
-      <Text style={button1} >
-      {/* onPress={handleSendMessage} */}
-            Send Message
-          </Text>
+      <ScrollView>
+        <View style={styles.blackTop}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require('../profile/assets/contact.png')} 
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
+        
+        <View style={styles.formWrapper}>
+          <View style={styles.inputGroup}>
+            <View style={styles.inputContainer}>
+              <AntDesign name="user" size={24} color="#2c3e50" style={styles.icon} />
+              <Text style={styles.label}>Name</Text>
+            </View>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
+          </View>
+          <View style={styles.inputGroup}>
+            <View style={styles.inputContainer}>
+              <AntDesign name="mail" size={24} color="#2c3e50" style={styles.icon} />
+              <Text style={styles.label}>Email</Text>
+            </View>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+          </View>
+          <View style={styles.inputGroup}>
+            <View style={styles.inputContainer}>
+              <AntDesign name="message1" size={24} color="#2c3e50" style={styles.icon} />
+              <Text style={styles.label}>Message</Text>
+            </View>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.messageInput}
+                placeholder="Message"
+                multiline
+                numberOfLines={4}
+                value={message}
+                onChangeText={setMessage}
+              />
+            </View>
+          </View>
+          <TouchableOpacity style={styles.button} onPress={sendEmail}>
+            <Text style={styles.buttonText}>Send Message</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.contactText}>Contact Us</Text>
+          <TouchableOpacity style={styles.footerItem} onPress={openEmail}>
+            <MaterialIcons name="email" size={24} color="white" />
+            <Text style={[styles.footerText, {textDecorationLine: 'underline'}]}>cms@uaar.edu.pk</Text>
+          </TouchableOpacity>
+          <View style={styles.footerItem}>
+            <FontAwesome name="phone" size={24} color="white" />
+            <Text style={styles.footerText}>+92-51-9292195, +92-51-9062301 </Text>
+          </View>
+          <View style={styles.footerItem}>
+            <MaterialIcons name="location-on" size={24} color="white" />
+            <Text style={styles.footerText}>PMAS-Arid Agriculture University Rawalpindi, 
+Shamsabad, Muree Road Rawalpindi - Pakistan. </Text>
+          </View>
+          <TouchableOpacity style={styles.footerItem} onPress={openWebsite}>
+            <FontAwesome name="globe" size={24} color="white" />
+            <Text style={[styles.footerText, {textDecorationLine: 'underline'}]}>www.uaar.edu.pk</Text>
+          </TouchableOpacity>
+          <View style={styles.footerLine}></View>
+            <View style={styles.footerContainer}>
+            <Text style={styles.footerEndText}>PMAS ARID University</Text>
+            <Text style={styles.footercampusText}>(UIIT)</Text>
+          </View>
+        </View>
+
+      </ScrollView>
     </View>
   );
 };
@@ -69,43 +159,129 @@ const ContactUs = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  blackTop: {
+    backgroundColor: 'green',
+    width: '100%',
+    height: 300,
     alignItems: 'center',
-    paddingHorizontal: 20,
-    position: 'relative', // Needed for absolute positioning of wavy background
+    borderRadius: 10,
   },
-  wavyBackground: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'green', // Set background color
-    borderBottomLeftRadius: 200, // Adjust radius to create waves
-    borderBottomRightRadius: 200, // Adjust radius to create waves
-    zIndex: -1, // Ensure the background stays behind other content
+  imageContainer: {
+    backgroundColor: 'green',
+    width: '100%',
+    height: 300,
+    marginTop: 40,
+    alignItems: 'center',
+    borderRadius: 10,
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  image: {
+    flex: 1,
+    height: 250,
+    width: 300,
+    zIndex: 0,
+  },
+  formWrapper: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    elevation: 3,
+    padding: 20,
+    marginTop: 20,
+  },
+  inputGroup: {
     marginBottom: 20,
-    zIndex: 1, // Ensure the text stays above the background
+  },
+  label: {
+    fontSize: 16,
+    color: '#2c3e50',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  inputWrapper: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    elevation: 3,
   },
   input: {
-    width: '100%',
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#2c3e50',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-    backgroundColor: 'white', // Set input background color
-    zIndex: 1, // Ensure inputs stay above the background
   },
   messageInput: {
-    height: 100,
+    height: 120,
+    borderColor: '#2c3e50',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    textAlignVertical: 'top',
   },
-  
+  button: {
+    backgroundColor: 'green',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  icon: {
+    marginRight: 10,
+  },
+  footer: {
+    backgroundColor: 'black',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginTop: 30,
+  },
+  contactText: {
+    textAlign:'center',
+    fontSize: 22,
+    color:'white',
+    fontWeight: 'bold',
+    marginBottom:20,
+  },
+  footerItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+    marginLeft: 10,
+  },
+  footerText: {
+    fontSize: 16,
+    color: 'white',
+    marginLeft: 10,
+  },
+  footerLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginTop:20,
+  },
+  footerContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  footerEndText: {
+    fontSize: 16,
+    color: 'white',
+    marginTop: 10,
+  },
+  footercampusText: {
+    fontSize: 16,
+    color: 'white',
+  },
 });
 
-export default ContactUs;
+export default Contact;
