@@ -43,7 +43,7 @@ const SettingsScreen = () => {
         <Text style={[styles.headerText, darkMode && styles.darkModeText]}>Settings</Text>
         <View style={styles.imageContainer}>
           <Image
-            source={require('../profile/assets/contact.png')}
+            source={require('../component/contact.png')}
             style={styles.image}
             resizeMode="cover"
           />
@@ -244,7 +244,9 @@ iconarrow1:{
   footer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom:60,
+    // marginBottom:60,
+    height:150,
+    backgroundColor:'#000'
   },
   footerLine: {
     borderBottomWidth: 1,
