@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SVGWave from '../component/SVGWave';
+import SVGWave from '../profile/assets/SVGWave';
 import { useNavigation } from "../context/NavigationContext";
 const { width } = Dimensions.get('window');
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingHorizontal: 10,
-    marginTop: 120,
+    // marginTop: 0,
   },
   container1:{
     alignItems: "center",
@@ -23,25 +23,27 @@ const styles = StyleSheet.create({
     width: 200,
     height: 100,
     margin: 10,
-    backgroundColor: "green",
+    backgroundColor: "#1a8739",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 8,
+    borderColor: "white",
+    elevation:10,
+    borderRadius: 18,
   },
   cardText: {
     fontSize: 20,
     color: "white",
   },
   svgCurve: {
-    position: 'absolute',
+    // position: 'absolute',
     width: width,
+    
   },
 });
 
 export const Home = () => {
-  const { navigateTo } = useNavigation();
+   const { navigateTo } = useNavigation();
   const digits = [
     { label: "Teachers", icon: "graduation-cap", screen: "teachers" },
     { label: "Courses", icon: "book", screen: "courses" },
@@ -55,6 +57,7 @@ export const Home = () => {
   return (
     <View style={styles.container}>
       <SVGWave customStyles={styles.svgCurve} />
+
       <View style={styles.container1}>
         {digits.map(({ label, icon, screen }) => (
           <TouchableOpacity

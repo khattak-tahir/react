@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from 'rea
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 export const Profile = () => {
@@ -29,7 +29,7 @@ export const Profile = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        {/* First Container */}
+        
         <View style={styles.container1}>
           <Text style={styles.text}>Details</Text>
           <View style={styles.avatarContainer}>
@@ -48,14 +48,14 @@ export const Profile = () => {
           <Text style={styles.designation}>(Student)</Text>
         </View>
 
-        {/* Second Container */}
+        
         <View style={styles.container2}>
           <View style={styles.infoRow}>
             <View style={styles.infoFieldContainer}>
               <Text style={styles.infoField}>Email:</Text>
             </View>
             <View style={styles.infoTextContainer}>
-              <AntDesign name="mail" size={24} color="black" />
+              <Ionicons name="mail" size={24} color="#1a8739" />
               <Text style={styles.infoText}>tahirkhattak456.com</Text>
             </View>
           </View>
@@ -65,7 +65,7 @@ export const Profile = () => {
               <Text style={styles.infoField}>Phone no:</Text>
             </View>
             <View style={styles.infoTextContainer}>
-              <Feather name="phone" size={24} color="black" />
+              <FontAwesome name="phone" size={24} color="#1a8739" />
               <Text style={styles.infoText}>555-555-5555</Text>
             </View>
           </View>
@@ -75,7 +75,7 @@ export const Profile = () => {
               <Text style={styles.infoField}>Arid no: </Text>  
             </View>
             <View style={styles.infoTextContainer}>
-              <MaterialCommunityIcons name="badge-account-outline" size={24} color="black" />
+              <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
               <Text style={styles.infoText}>20-Arid-628</Text>
             </View>
           </View>
@@ -85,7 +85,7 @@ export const Profile = () => {
               <Text style={styles.infoField}>CNIC:</Text>
             </View>
             <View style={styles.infoTextContainer}>
-              <AntDesign name="idcard" size={24} color="black" />
+              <FontAwesome name="id-card" size={24} color="#1a8739" />
               <Text style={styles.infoText}>123123123</Text>
             </View>
           </View>
@@ -95,7 +95,7 @@ export const Profile = () => {
               <Text style={styles.infoField}>Degree:</Text>
             </View>
             <View style={styles.infoTextContainer}>
-              <Ionicons name="school-outline" size={24} color="black" />
+              <Ionicons name="school" size={24} color="#1a8739" />
               <Text style={styles.infoText}>BSCS 8/B (evening)</Text>
             </View>
           </View>
@@ -120,22 +120,22 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   container1: {
-    backgroundColor: 'green',
+    backgroundColor: '#1a8739',
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 10,
-    borderRadius: 30,
+    borderBottomRightRadius: 80,
     width: '100%',
   },
   container2: {
     backgroundColor: 'white',
     padding: 20,
-    borderRadius: 10,
-    width: '90%',
-    marginTop: 20,
+    borderTopLeftRadius: 80,
+    width: '100%',
+    marginTop: 30,
   },
   avatarContainer: {
     backgroundColor: '#c8e6c9',
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     marginBottom: 10,
+    marginTop:20,
   },
   infoField: {
     fontSize: 18,
@@ -203,8 +204,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   footerLine: {
+    marginTop:20,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#fff',
   },
   footerContainer: {
     alignItems: 'center',
@@ -212,13 +214,13 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: '#fff',
     marginTop: 10,
   },
   footercampusText: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: '#fff',
   },
 });
 
-
+export default Profile;
