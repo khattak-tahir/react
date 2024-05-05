@@ -8,13 +8,14 @@ const Welcome = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+          <View style={styles.upperHalf}></View>
             <View style={styles.container1}>
-                <Image style={styles.logo} source={welcomelogo} />
+                <Image style={[styles.logo]} source={welcomelogo} />
                 <View style={styles.radioContainer}>
                     <View style={styles.radioOption}>
                         <RadioButton
                             value="teacher"
-                            color='green'
+                            color='black'
                             status={role === 'teacher' ? 'checked' : 'unchecked'}
                             onPress={() => setRole('teacher')}
                         />
@@ -23,7 +24,7 @@ const Welcome = ({ navigation }) => {
                     <View style={styles.radioOption}>
                         <RadioButton
                             value="student"
-                            color='green'
+                            color='black'
                             status={role === 'student' ? 'checked' : 'unchecked'}
                             onPress={() => setRole('student')}
                         />
@@ -45,24 +46,40 @@ const Welcome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        backgroundColor: '#000',
+        // width: '100%',
+        // height: '100%',
+        // display: 'flex',
+         backgroundColor: '#1a8739',
+        flex:1,
+        position:'relative',
     },
+    upperHalf: {
+      position: 'absolute',
+      width: 0,
+      height: 0,
+      backgroundColor: "transparent",
+      borderStyle: "solid",
+      borderRightWidth: 980,
+      borderTopWidth: 550,
+      borderRightColor: "transparent",
+      borderTopColor: "black",
+  },
+
     container1: {
-        display: 'flex',
+        // display: 'flex',
+        flex:1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100%',
-        width: '100%',
+        
     },
     logo: {
-        height: '55%',
+        height: '60%',
         width: '180%',
         resizeMode: 'contain',
+        alignItems:'center',
         marginBottom: 30,
     },
+
     radioContainer: {
         marginBottom: 30,
     },
@@ -70,9 +87,7 @@ const styles = StyleSheet.create({
     radioOption: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 15,
-        
-       
+        marginBottom: 15, 
     },
     radioText: {
         fontSize: 18,
@@ -80,10 +95,10 @@ const styles = StyleSheet.create({
         color: '#ffffff',
     },
     continueButton: {
-        backgroundColor: "#1a8739",
+        backgroundColor: "#000",
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 15,
     },
     continueButtonText: {
         color: '#ffffff',
