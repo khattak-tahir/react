@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Linking, Alert, ScrollView } from 'react-native'; 
 import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
-const Contact = () => {
+const ContactScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -68,7 +68,7 @@ const Contact = () => {
         <View style={styles.blackTop}>
           <View style={styles.imageContainer}>
             <Image
-              source={require('../profile/assets/contact.png')} 
+              source={require('../component/contact.png')} 
               style={styles.image}
               resizeMode="cover"
             />
@@ -78,7 +78,7 @@ const Contact = () => {
         <View style={styles.formWrapper}>
           <View style={styles.inputGroup}>
             <View style={styles.inputContainer}>
-              <AntDesign name="user" size={24} color="#2c3e50" style={styles.icon} />
+              <MaterialIcons name="person" size={24} color="#1a8739" style={styles.icon} />
               <Text style={styles.label}>Name</Text>
             </View>
             <View style={styles.inputWrapper}>
@@ -92,7 +92,7 @@ const Contact = () => {
           </View>
           <View style={styles.inputGroup}>
             <View style={styles.inputContainer}>
-              <AntDesign name="mail" size={24} color="#2c3e50" style={styles.icon} />
+              <MaterialIcons name="email" size={24} color="#1a8739" style={styles.icon} />
               <Text style={styles.label}>Email</Text>
             </View>
             <View style={styles.inputWrapper}>
@@ -106,10 +106,9 @@ const Contact = () => {
           </View>
           <View style={styles.inputGroup}>
             <View style={styles.inputContainer}>
-              <AntDesign name="message1" size={24} color="#2c3e50" style={styles.icon} />
+              <MaterialIcons name="message" size={24} color="#1a8739"  style={styles.icon} />
               <Text style={styles.label}>Message</Text>
             </View>
-            <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.messageInput}
                 placeholder="Message"
@@ -118,7 +117,7 @@ const Contact = () => {
                 value={message}
                 onChangeText={setMessage}
               />
-            </View>
+            
           </View>
           <TouchableOpacity style={styles.button} onPress={sendEmail}>
             <Text style={styles.buttonText}>Send Message</Text>
@@ -128,20 +127,20 @@ const Contact = () => {
         <View style={styles.footer}>
           <Text style={styles.contactText}>Contact Us</Text>
           <TouchableOpacity style={styles.footerItem} onPress={openEmail}>
-            <MaterialIcons name="email" size={24} color="white" />
+            <MaterialIcons name="email" size={24} color="#1a8739" />
             <Text style={[styles.footerText, {textDecorationLine: 'underline'}]}>cms@uaar.edu.pk</Text>
           </TouchableOpacity>
           <View style={styles.footerItem}>
-            <FontAwesome name="phone" size={24} color="white" />
+            <FontAwesome name="phone" size={24} color="#1a8739" />
             <Text style={styles.footerText}>+92-51-9292195, +92-51-9062301 </Text>
           </View>
           <View style={styles.footerItem}>
-            <MaterialIcons name="location-on" size={24} color="white" />
+            <MaterialIcons name="location-on" size={24} color="#1a8739" />
             <Text style={styles.footerText}>PMAS-Arid Agriculture University Rawalpindi, 
-Shamsabad, Muree Road Rawalpindi - Pakistan. </Text>
+            Shamsabad, Muree Road Rawalpindi - Pakistan. </Text>
           </View>
           <TouchableOpacity style={styles.footerItem} onPress={openWebsite}>
-            <FontAwesome name="globe" size={24} color="white" />
+            <FontAwesome name="globe" size={24} color="#1a8739" />
             <Text style={[styles.footerText, {textDecorationLine: 'underline'}]}>www.uaar.edu.pk</Text>
           </TouchableOpacity>
           <View style={styles.footerLine}></View>
@@ -159,20 +158,20 @@ Shamsabad, Muree Road Rawalpindi - Pakistan. </Text>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1a8739',
   },
   blackTop: {
-    backgroundColor: 'green',
+    backgroundColor: '#1a8739',
     width: '100%',
     height: 300,
     alignItems: 'center',
     borderRadius: 10,
   },
   imageContainer: {
-    backgroundColor: 'green',
+    backgroundColor: '#1a8739',
     width: '100%',
     height: 300,
-    marginTop: 40,
+    marginTop: 20,
     alignItems: 'center',
     borderRadius: 10,
   },
@@ -185,13 +184,14 @@ const styles = StyleSheet.create({
   formWrapper: {
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 10,
-    elevation: 3,
-    padding: 20,
-    marginTop: 20,
+    borderTopLeftRadius: 80,
+    borderBottomRightRadius: 80,
+    elevation:20,
+    borderColor:'black',
+    padding: 50,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   label: {
     fontSize: 16,
@@ -201,32 +201,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5,
+
   },
-  inputWrapper: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    elevation: 3,
-  },
+ 
   input: {
     height: 40,
-    borderColor: '#2c3e50',
+    borderColor: '#fff',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 20,
     paddingHorizontal: 10,
     marginBottom: 10,
+    elevation: 6,
+    backgroundColor:'#fff'
   },
   messageInput: {
     height: 120,
-    borderColor: '#2c3e50',
+    borderColor: '#fff',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 20,
     paddingHorizontal: 10,
     marginBottom: 10,
     textAlignVertical: 'top',
+    paddingTop:10,
+    elevation: 6,
+    backgroundColor:'#fff'
+
   },
   button: {
-    backgroundColor: 'green',
-    borderRadius: 5,
+    backgroundColor: '#1a8739',
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -239,12 +242,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  
   },
   footer: {
     backgroundColor: 'black',
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginTop: 30,
+    borderTopLeftRadius:80,
+    height:400,
   },
   contactText: {
     textAlign:'center',
@@ -284,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Contact;
+export default ContactScreen;

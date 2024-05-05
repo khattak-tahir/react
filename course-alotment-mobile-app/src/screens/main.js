@@ -3,7 +3,7 @@ import React from "react";
 import { BottomNav } from "../common/bottomNavbar";
 import { NavigationProvider } from "../context/NavigationContext";
 import { LayoutController } from "./layoutController";
-
+// import { TeachersScreen, CoursesScreen, ContactScreen, SettingsScreen } from "../HomeScreens";
 const Main = ({ navigation }) => {
   return (
     <NavigationProvider>

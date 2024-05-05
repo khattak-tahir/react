@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2c3e50',
+    color: 'black',
     marginBottom: 10,
     marginTop: 40,
     textAlign: 'center',
@@ -173,11 +173,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#2c3e50',
+    color: 'black',
   },
   designation: {
     fontSize: 18,
-    color: '#2c3e50',
+    color: 'black',
   },
   infoRow: {
     marginBottom: 10,

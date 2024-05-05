@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SVGWave from '../component/SVGWave';
-
+import { useNavigation } from "../context/NavigationContext";
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -29,11 +29,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 8,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
   },
   cardText: {
     fontSize: 20,
@@ -45,15 +40,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home = ({ navigation }) => {
+export const Home = () => {
+  const { navigateTo } = useNavigation();
   const digits = [
-    { label: "Teachers", icon: "graduation-cap", screen: "TeachersScreen" },
-    { label: "Courses", icon: "book", screen: "CoursesScreen" },
-    { label: "Contact Us", icon: "contact", screen: "ContactScreen" },
-    { label: "Settings", icon: "cog", screen: "SettingsScreen" }
+    { label: "Teachers", icon: "graduation-cap", screen: "teachers" },
+    { label: "Courses", icon: "book", screen: "courses" },
+    { label: "Contact Us", icon: "phone", screen: "contact" },
+    { label: "Settings", icon: "cog", screen: "settings" }
   ];
   
-
+  const handleCardPress = (screen) => {
+    navigateTo(screen);
+  };
   return (
     <View style={styles.container}>
       <SVGWave customStyles={styles.svgCurve} />
@@ -62,7 +60,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             key={label}
             style={styles.card}
-            onPress={() => navigation.navigate(screen)}
+            onPress={() => handleCardPress(screen)}
           >
             <Icon name={icon} size={30} color="white" />
             <Text style={styles.cardText}>{label}</Text>

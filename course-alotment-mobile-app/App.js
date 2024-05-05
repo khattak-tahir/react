@@ -60,14 +60,14 @@ export default function App() {
 
         {/* <Stack.Screen name="feedback" component={Feedback} /> */}
         
-        <Stack.Screen
+        {/* <Stack.Screen
           name="TeachersScreen"
           component={TeachersScreen}
           options={{
             headerShown: false,
           }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="CoursesScreen"
           component={CoursesScreen}
           options={{
@@ -87,7 +87,7 @@ export default function App() {
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
         
       </Stack.Navigator>
     </NavigationContainer>
