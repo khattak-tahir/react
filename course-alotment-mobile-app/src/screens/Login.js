@@ -1,4 +1,3 @@
-// import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import logo from '../../assets/images/mainlogo.png';
@@ -17,24 +16,35 @@ const Login = ({ navigation, route }) => {
     const handleLogin = async () => {
         const endpoint = role === 'teacher' ? '/teacherlogin' : '/studentlogin';
         const userId = role === 'teacher' ? teacherid : aridno;
-
+    
         try {
-            const response = await fetch(`http://192.168.62.85:3001${endpoint}`, {
-                [role === 'teacher' ? 'teacherId' : 'aridno']: userId,
-                password: password
+            const response = await fetch(`http://192.168.10.10:3001${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    [role === 'teacher' ? 'teacherId' : 'aridno']: userId,
+                    password: password
+                })
             });
-
+    
+            const responseData = await response.json();
+    
+            console.warn('Response Status:', response.status);
+            console.warn('Response Data:', responseData);
+    
             if (response) {
-                // console.log(response);
+                console.warn('Login successful:', responseData);
                 navigation.navigate("main");
             } else {
-                console.log('Login failed!');
+                console.warn('Login failed:', responseData.message);
             }
         } catch (error) {
-            console.error(error.message);
+            console.error('Error during login request:', error.message);
         }
     };
-
+        
     return (
         <View style={styles.container}>
             <View style={styles.container1}>
@@ -70,25 +80,10 @@ const Login = ({ navigation, route }) => {
                             onPress={toggleShowPassword}
                         />
                     </View>
-                    {/* <View style={styles.fp}>
-                        <Text style={styles.link}>Forgot Password?</Text>
-                    </View> */}
 
                     <Text style={button1} onPress={handleLogin}>
                         Login
                     </Text>
-
-                    {/* <Text>
-                        Don't have an account?&nbsp;
-                        <Text
-                            style={styles.link}
-                            onPress={() =>
-                                navigation.navigate("signup", { role: route.params.role })
-                            }
-                        >
-                            Create a new account
-                        </Text> */}
-                    {/* </Text> */}
                 </View>
             </View>
         </View>
@@ -159,17 +154,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginLeft: 280,
-
-    },
-
-    // link: {
-    //   color: "red",
-    // },
-    // fp: {
-    //   marginLeft: 180,
-    //   margin: 10,
-    // }
+    }
 });
-
 
 export default Login;

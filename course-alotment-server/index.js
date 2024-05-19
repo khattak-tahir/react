@@ -396,46 +396,72 @@ app.delete("/courses/:id", async (req, res) => {
 });
 
 // Login Apis
-app.post('/teacherlogin', async (req, res) => {
-    const { teacherId, password } = req.body;
+// app.post('teacherlogin', async (req, res) => {
+//     const { teacherId, password } = req.body;
 
-    if (!teacherId || !password) {
-        return res.status(400).json({ message: "TeacherId and password are required" });
-    }
+//     if (!teacherId || !password) {
+//         return res.status(400).json({ message: "TeacherId and password are required" });
+//     }
 
-    try {
-        const teacher = await prisma.teachers.findUnique({
-            where: {
-                teacherId: teacherId
-            }
-        });
+//     try {
+//         const teacher = await prisma.teachers.findUnique({
+//             where: {
+//                 teacherId: teacherId
+//             }
+//         });
 
-        if (!teacher) {
-            return res.status(404).json({ message: "Teacher not found" });
-        }
+//         if (!teacher) {
+//             return res.status(404).json({ message: "Teacher not found" });
+//         }
 
-        if (teacher.password === password) {
-            res.status(200).json({ message: "Login successful", teacher });
-        } else {
-            res.status(401).json({ message: "Invalid password" });
-        }
-    } catch (error) {
-        res.status(500).json({ message: "An error occurred", error: error.message });
-    }
-});
+//         if (teacher.password === password) {
+//             res.status(200).json({ message: "Login successful", teacher });
+//         } else {
+//             res.status(401).json({ message: "Invalid password" });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ message: "An error occurred", error: error.message });
+//     }
+// });
 
+// app.post('studentlogin', async (req, res) => {
+//     const { aridno, password } = req.body;
+
+//     if (!aridno || !password) {
+//         return res.status(400).json({ message: "Aridno and password are required" });
+//     }
+//     else{
+//     try {
+//         const student = await prisma.students.findUnique({
+//             where: {
+//                 aridno: aridno
+//             }
+//         });
+
+//         if (!student) {
+//             return res.status(404).json({ message: "Student not found" });
+//         }
+
+//         if (student.password == password) {
+//             res.status(200).json({ message: "Login successful", student });
+//         } else {
+//             res.status(401).json({ message: "Invalid password" });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ message: "An error occurred", error: error.message });
+//     }
+// }
+// });
 app.post('/studentlogin', async (req, res) => {
     const { aridno, password } = req.body;
 
     if (!aridno || !password) {
         return res.status(400).json({ message: "Aridno and password are required" });
     }
-    else{
+
     try {
-        const student = await prisma.students.findUnique({
-            where: {
-                aridno: aridno
-            }
+        const student = await prisma.student.findUnique({
+            where: { aridno: aridno }
         });
 
         if (!student) {
@@ -448,9 +474,36 @@ app.post('/studentlogin', async (req, res) => {
             res.status(401).json({ message: "Invalid password" });
         }
     } catch (error) {
+        console.error('Error during student login:', error);
         res.status(500).json({ message: "An error occurred", error: error.message });
     }
-}
+});
+
+app.post('/teacherlogin', async (req, res) => {
+    const { teacherId, password } = req.body;
+
+    if (!teacherId || !password) {
+        return res.status(400).json({ message: "TeacherId and password are required" });
+    }
+
+    try {
+        const teacher = await prisma.teacher.findUnique({
+            where: { teacherId: teacherId }
+        });
+
+        if (!teacher) {
+            return res.status(404).json({ message: "Teacher not found" });
+        }
+
+        if (teacher.password === password) {
+            res.status(200).json({ message: "Login successful", teacher });
+        } else {
+            res.status(401).json({ message: "Invalid password" });
+        }
+    } catch (error) {
+        console.error('Error during teacher login:', error);
+        res.status(500).json({ message: "An error occurred", error: error.message });
+    }
 });
 
 

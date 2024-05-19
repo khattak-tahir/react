@@ -1,6 +1,6 @@
-import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import React from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   NativeBaseProvider,
   Text,
@@ -9,8 +9,8 @@ import {
   Pressable,
   Center,
   Icon,
-} from "native-base";
-import { useNavigation } from "../context/NavigationContext";
+} from 'native-base';
+import { useNavigation } from '../context/NavigationContext';
 
 export function BottomNav({ navigation }) {
   const { navigateTo, currentPage } = useNavigation();
@@ -27,17 +27,17 @@ export function BottomNav({ navigation }) {
         <HStack bg="green.700" alignItems="center" safeAreaBottom shadow={6}>
           <Pressable
             cursor="pointer"
-            opacity={currentPage === "home" ? 1 : 0.5}
+            opacity={currentPage === 'home' ? 1 : 0.5}
             py="3"
             flex={1}
-            onPress={() => navigateTo("home")}
+            onPress={() => navigateTo('home')}
           >
             <Center>
               <Icon
                 mb="1"
                 as={
                   <MaterialCommunityIcons
-                    name={currentPage === "home" ? "home" : "home-outline"}
+                    name={currentPage === 'home' ? 'home' : 'home-outline'}
                   />
                 }
                 color="white"
@@ -51,19 +51,17 @@ export function BottomNav({ navigation }) {
 
           <Pressable
             cursor="pointer"
-            opacity={currentPage === "timetable" ? 1 : 0.5}
+            opacity={currentPage === 'timetable' ? 1 : 0.5}
             py="2"
             flex={1}
-            onPress={() => navigateTo("timetable")}
+            onPress={() => navigateTo('timetable')}
           >
             <Center>
               <Icon
                 mb="1"
                 as={
                   <MaterialCommunityIcons
-                    name={
-                      currentPage === "timetable" ? "timetable" : "timetable"
-                    }
+                    name='timetable'
                   />
                 }
                 color="white"
@@ -77,19 +75,17 @@ export function BottomNav({ navigation }) {
 
           <Pressable
             cursor="pointer"
-            opacity={currentPage === "profile" ? 1 : 0.5}
+            opacity={currentPage === 'profile' ? 1 : 0.5}
             py="2"
             flex={1}
-            onPress={() => navigateTo("profile")}
+            onPress={() => navigateTo('profile')}
           >
             <Center>
               <Icon
                 mb="1"
                 as={
                   <MaterialCommunityIcons
-                    name={
-                      currentPage === "profile" ? "account" : "account-outline"
-                    }
+                    name={currentPage === 'profile' ? 'account' : 'account-outline'}
                   />
                 }
                 color="white"
@@ -106,7 +102,7 @@ export function BottomNav({ navigation }) {
             opacity={0.5}
             py="2"
             flex={1}
-            onPress={() => navigation.navigate("login")}
+            onPress={() => navigation.navigate('login')}
           >
             <Center>
               <Icon
@@ -120,7 +116,6 @@ export function BottomNav({ navigation }) {
               </Text>
             </Center>
           </Pressable>
-          
         </HStack>
       </Box>
     </NativeBaseProvider>

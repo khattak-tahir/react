@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SVGWave from '../profile/assets/SVGWave';
+import SVGWave from '../component/SVGWave';
 import { useNavigation } from "../context/NavigationContext";
 const { width } = Dimensions.get('window');
 
