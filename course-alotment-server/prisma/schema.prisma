@@ -27,7 +27,7 @@ model teachers {
     id            Int      @id @default(autoincrement())
     name          String
     cnic          Int      @unique
-    teacherid     String
+    teacherid     String   @unique
     qualification String
     gender        String
     courses       Json

@@ -11,10 +11,15 @@ import {
   Icon,
 } from 'native-base';
 import { useNavigation } from '../context/NavigationContext';
-
+import { useRoute } from '@react-navigation/native'
 export function BottomNav({ navigation }) {
+  const route = useRoute();
   const { navigateTo, currentPage } = useNavigation();
-
+  
+  const { role } = route.params || {};
+  const handleLogout = () => {
+    navigation.navigate('welcome', {role});
+  };
   return (
     <NativeBaseProvider>
       <Box
@@ -102,7 +107,7 @@ export function BottomNav({ navigation }) {
             opacity={0.5}
             py="2"
             flex={1}
-            onPress={() => navigation.navigate('login')}
+            onPress={handleLogout}
           >
             <Center>
               <Icon

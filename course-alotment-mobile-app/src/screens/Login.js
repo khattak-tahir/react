@@ -4,7 +4,6 @@ import logo from '../../assets/images/mainlogo.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { button1 } from "../common/button";
 import { label, input, formgroup } from "../common/formcss";
-
 const Login = ({ navigation, route }) => {
     const { role } = route.params;
     const [teacherid, setTeacherId] = useState("");
@@ -12,10 +11,16 @@ const Login = ({ navigation, route }) => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => { setShowPassword(!showPassword); };
-
     const handleLogin = async () => {
         const endpoint = role === 'teacher' ? '/teacherlogin' : '/studentlogin';
         const userId = role === 'teacher' ? teacherid : aridno;
+        const userIdField = role === 'teacher' ? 'teacherid' : 'aridno';
+    
+        // Check if user ID and password are provided
+        if (!userId || !password) {
+            alert('Please enter your credentials.');
+            return;
+        }
     
         try {
             const response = await fetch(`http://192.168.10.10:3001${endpoint}`, {
@@ -24,24 +29,25 @@ const Login = ({ navigation, route }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    [role === 'teacher' ? 'teacherId' : 'aridno']: userId,
+                    [userIdField]: userId,
                     password: password
                 })
             });
     
             const responseData = await response.json();
     
-            console.warn('Response Status:', response.status);
-            console.warn('Response Data:', responseData);
-    
-            if (response) {
+            if (response.ok) {
+                // Login successful
                 console.warn('Login successful:', responseData);
                 navigation.navigate("main");
             } else {
+                // Login failed
                 console.warn('Login failed:', responseData.message);
+                alert(responseData.message || 'Invalid credentials');
             }
         } catch (error) {
             console.error('Error during login request:', error.message);
+            alert('An error occurred during login');
         }
     };
         

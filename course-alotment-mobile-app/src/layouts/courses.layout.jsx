@@ -48,7 +48,7 @@ import Card from "../component/Card";
 //     );
 // };
 
-export default function CoursesScreen(props) {
+export default function Courses(props) {
     const { columnsData } = props;
     // const [isOpen, setIsOpen] = useState(false)
     const [coursesData, setCoursesData] = useState([]);

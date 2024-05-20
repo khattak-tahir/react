@@ -4,6 +4,7 @@ import TimeTable from "@mikezzb/react-native-timetable";
 
 const styles = StyleSheet.create({
   centeredContainer: {
+    // flex:1,
     height: "100%",
     marginHorizontal: 30,
     justifyContent: "center",

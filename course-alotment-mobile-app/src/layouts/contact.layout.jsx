@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Linking, Alert, ScrollView } from 'react-native'; 
 import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
-const ContactScreen = () => {
+export const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -290,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContactScreen;
+export default Contact;

@@ -8,7 +8,8 @@ const upload = multer({ dest: 'uploads/' });
 
 app.use(express.json());
 app.use(cors());
-
+async function main() {
+    await prisma.$connect();
 // Dashboard
 app.get("/dashboard", async (req, res) => {
     try {
@@ -460,7 +461,8 @@ app.post('/studentlogin', async (req, res) => {
     }
 
     try {
-        const student = await prisma.student.findUnique({
+        console.log('Received request body:', req.body);
+        const student = await prisma.students.findUnique({
             where: { aridno: aridno }
         });
 
@@ -475,20 +477,23 @@ app.post('/studentlogin', async (req, res) => {
         }
     } catch (error) {
         console.error('Error during student login:', error);
+        // Log the error message
+        console.error('Error message:', error.message);
         res.status(500).json({ message: "An error occurred", error: error.message });
     }
 });
 
 app.post('/teacherlogin', async (req, res) => {
-    const { teacherId, password } = req.body;
+    const { teacherid, password } = req.body;
 
-    if (!teacherId || !password) {
-        return res.status(400).json({ message: "TeacherId and password are required" });
+    if (!teacherid || !password) {
+        return res.status(400).json({ message: "Teacherid and password are required" });
     }
 
     try {
-        const teacher = await prisma.teacher.findUnique({
-            where: { teacherId: teacherId }
+        console.log('Received request body:', req.body);
+        const teacher = await prisma.teachers.findUnique({
+            where: { teacherid: teacherid }
         });
 
         if (!teacher) {
@@ -501,12 +506,21 @@ app.post('/teacherlogin', async (req, res) => {
             res.status(401).json({ message: "Invalid password" });
         }
     } catch (error) {
-        console.error('Error during teacher login:', error);
+        console.error('Error during Teacher login:', error);
+        // Log the error message
+        console.error('Error message:', error.message);
         res.status(500).json({ message: "An error occurred", error: error.message });
     }
 });
-
-
-
 app.listen(3001, () =>
     console.log('server listening on port 3001'));
+}
+main()
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

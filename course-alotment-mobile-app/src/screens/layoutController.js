@@ -1,28 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { Home } from '../layouts/home.layout';
 import { Profile } from '../layouts/profile.layout';
 import { Timetable } from '../layouts/timetable.layout';
 import { useNavigation } from '../context/NavigationContext';
-import TeachersScreen from '../HomeScreens/TeachersScreen';
-import CoursesScreen from '../HomeScreens/CoursesScreen';
-import ContactScreen from '../HomeScreens/ContactScreen';
-import SettingsScreen from '../HomeScreens/SettingsScreen';
+import { Teachers } from '../layouts/teachers.layout';
+import { Courses } from '../layouts/courses.layout';
+import { Contact } from '../layouts/contact.layout';
+import { Settings } from '../layouts/settings.layout';
 
 export const LayoutController = () => {
   const { currentPage } = useNavigation();
 
   return (
-    <View>
+    <SafeAreaView>
       {currentPage === 'home' && <Home />}
       {currentPage === 'profile' && <Profile />}
       {currentPage === 'timetable' && <Timetable />}
-      {currentPage === 'teachers' && <TeachersScreen />}
-      {currentPage === 'courses' && <CoursesScreen />}
-      {currentPage === 'contact' && <ContactScreen />}
-      {currentPage === 'settings' && <SettingsScreen />}
-    </View>
+      {currentPage === 'teachers' && <Teachers />}
+      {currentPage === 'courses' && <Courses />}
+      {currentPage === 'contact' && <Contact />}
+      {currentPage === 'settings' && <Settings />}
+    </SafeAreaView>
   );
 };
-
-export default LayoutController;

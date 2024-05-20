@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-const NavigationContext = createContext();
+export const NavigationContext = createContext();
 
 export const useNavigation = () => {
   const context = useContext(NavigationContext);
@@ -11,12 +11,13 @@ export const useNavigation = () => {
 };
 
 export const NavigationProvider = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState("timetable");
+  const [currentPage, setCurrentPage] = useState("home");
 
   const navigateTo = (page) => {
+    console.log("Navigating to:", page);
     setCurrentPage(page);
   };
-
+  
   return (
     <NavigationContext.Provider value={{ currentPage, navigateTo }}>
       {children}

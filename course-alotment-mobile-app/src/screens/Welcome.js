@@ -5,7 +5,9 @@ import { RadioButton } from 'react-native-paper';
 
 const Welcome = ({ navigation }) => {
     const [role, setRole] = useState('');
-
+    const handleContinue = () => {
+        navigation.navigate('login', { role });
+    };
     return (
         <View style={styles.container}>
           <View style={styles.upperHalf}></View>
@@ -34,7 +36,7 @@ const Welcome = ({ navigation }) => {
                 {role !== '' && (
                     <TouchableOpacity
                         style={styles.continueButton}
-                        onPress={() => navigation.navigate('login', { role })}
+                        onPress={handleContinue}
                     >
                         <Text style={styles.continueButtonText}>Continue</Text>
                     </TouchableOpacity>

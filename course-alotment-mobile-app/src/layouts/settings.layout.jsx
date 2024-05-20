@@ -3,7 +3,7 @@ import { TouchableOpacity, Linking } from 'react-native';
 import { StyleSheet, Text, View, ScrollView, Image, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
-const SettingsScreen = () => {
+export const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [captionIndex, setCaptionIndex] = useState(0); // State for current caption index
   const captions = [
@@ -265,4 +265,4 @@ iconarrow1:{
   },
 });
 
-export default SettingsScreen;
+export default Settings;
