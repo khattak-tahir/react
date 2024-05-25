@@ -17,7 +17,7 @@ import {
 // Custom components
 import Card from "../component/Card";
 
-export default function CheckTable(props) {
+export default function Teachers(props) {
   const { columnsData } = props;
   const [teachersData, setTeachersData] = useState([]);
 

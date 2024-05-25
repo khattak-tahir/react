@@ -1,8 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import { useNavigation } from "../context/NavigationContext";
+import { useNavigation } from "@react-navigation/native";
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import SVGWave from '../component/SVGWave';
-import { useNavigation } from '../context/NavigationContext';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -40,33 +45,51 @@ const styles = StyleSheet.create({
 });
 
 export const Home = () => {
-
-  const { navigateTo } = useNavigation()
-  const menuItems = [
-    { label: "Teachers", icon: "graduation-cap", screen: "Teachers" },
-    { label: "Courses", icon: "book", screen: "Courses" },
-    { label: "Contact Us", icon: "phone", screen: "Contact" },
-    { label: "Settings", icon: "cog", screen: "Settings" }
-  ];
-
-  const handleCardPress = (screen) => {
-    navigateTo(screen);
-  };
-
+ const navigation= useNavigation();
   return (
     <View style={styles.container}>
       <SVGWave customStyles={styles.svgCurve} />
       <View style={styles.cardContainer}>
-        {menuItems.map(({ label, icon, screen }) => (
+        
           <TouchableOpacity
-            key={label}
+            
             style={styles.card}
-            onPress={() => handleCardPress(screen)}
+            onPress={() => navigation.navigate('Teachers_Screen')}
           >
-            <Icon name={icon} size={30} color="white" />
-            <Text style={styles.cardText}>{label}</Text>
+            
+            <FontAwesome5 name="chalkboard-teacher" size={34} color="black" />
+            <Text style={styles.cardText}>Teachers</Text>
           </TouchableOpacity>
-        ))}
+
+          <TouchableOpacity
+            
+            style={styles.card}
+            onPress={() => navigation.navigate('Courses_Screen')}
+          >
+           
+            <FontAwesome name="book" size={34} color="black" />
+            <Text style={styles.cardText}>Courses</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            
+            style={styles.card}
+            onPress={() => navigation.navigate('Contact_Screen')}
+          >
+           
+            <MaterialIcons name="contact-support" size={34} color="black" />
+            <Text style={styles.cardText}>Contact Us</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            
+            style={styles.card}
+            onPress={() => navigation.navigate('Settings_Screen')}
+          >
+            <Ionicons name="settings-sharp" size={34} color="black" />
+            <Text style={styles.cardText}>Settings</Text>
+          </TouchableOpacity>
+       
       </View>
     </View>
   );

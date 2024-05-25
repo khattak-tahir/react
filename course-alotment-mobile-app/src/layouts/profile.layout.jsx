@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
-export const Profile = () => {
+const Profile = ({ route }) => {
+  const [profileData, setProfileData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  
+  const { role } = route.params;
+
+  const fetchProfileData = async () => {
+    const endpoint = role === 'teacher' ? 'teachers' : 'students';
+    try {
+      const response = await fetch(`http://192.168.242.85:3001/${endpoint}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile data');
+      }
+      const data = await response.json();
+      setProfileData(data);
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
+
   const pickImage = async () => {
     console.log("Pick image function called");
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,11 +42,13 @@ export const Profile = () => {
     }
   };
 
+  if (!profileData) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        
         <View style={styles.container1}>
           <Text style={styles.text}>Details</Text>
           <View style={styles.avatarContainer}>
@@ -44,11 +63,10 @@ export const Profile = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <Text style={styles.name}>Muhammad Tahir Hussain Khattak</Text>
-          <Text style={styles.designation}>(Student)</Text>
+          <Text style={styles.name}>{profileData.name}</Text>
+          <Text style={styles.designation}>({role.charAt(0).toUpperCase() + role.slice(1)})</Text>
         </View>
 
-        
         <View style={styles.container2}>
           <View style={styles.infoRow}>
             <View style={styles.infoFieldContainer}>
@@ -56,50 +74,95 @@ export const Profile = () => {
             </View>
             <View style={styles.infoTextContainer}>
               <Ionicons name="mail" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>tahirkhattak456.com</Text>
+              <Text style={styles.infoText}>{profileData.email}</Text>
             </View>
           </View>
-          <View style={styles.rowLine}></View> 
+          <View style={styles.rowLine}></View>
           <View style={styles.infoRow}>
             <View style={styles.infoFieldContainer}>
               <Text style={styles.infoField}>Phone no:</Text>
             </View>
             <View style={styles.infoTextContainer}>
               <FontAwesome name="phone" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>555-555-5555</Text>
+              <Text style={styles.infoText}>{profileData.phone}</Text>
             </View>
           </View>
-          <View style={styles.rowLine}></View> 
-          <View style={styles.infoRow}>
-            <View style={styles.infoFieldContainer}>
-              <Text style={styles.infoField}>Arid no: </Text>  
-            </View>
-            <View style={styles.infoTextContainer}>
-              <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>20-Arid-628</Text>
-            </View>
-          </View>
-          <View style={styles.rowLine}></View> 
+          <View style={styles.rowLine}></View>
+          {role === 'student' ? (
+            <>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Arid no:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.aridNo}</Text>
+                </View>
+              </View>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Degree:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.degree}</Text>
+                </View>
+              </View>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Year:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="calendar" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.year}</Text>
+                </View>
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Teacher ID:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.teacherId}</Text>
+                </View>
+              </View>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Qualification:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.qualification}</Text>
+                </View>
+              </View>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Department:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="briefcase" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.department}</Text>
+                </View>
+              </View>
+            </>
+          )}
+          <View style={styles.rowLine}></View>
           <View style={styles.infoRow}>
             <View style={styles.infoFieldContainer}>
               <Text style={styles.infoField}>CNIC:</Text>
             </View>
             <View style={styles.infoTextContainer}>
               <FontAwesome name="id-card" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>123123123</Text>
+              <Text style={styles.infoText}>{profileData.cnic}</Text>
             </View>
           </View>
-          <View style={styles.rowLine}></View> 
-          <View style={styles.infoRow}>
-            <View style={styles.infoFieldContainer}>
-              <Text style={styles.infoField}>Degree:</Text>
-            </View>
-            <View style={styles.infoTextContainer}>
-              <Ionicons name="school" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>BSCS 8/B (evening)</Text>
-            </View>
-          </View>
-          
         </View>
 
         {/* Footer */}
@@ -181,7 +244,7 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     marginBottom: 10,
-    marginTop:20,
+    marginTop: 20,
   },
   infoField: {
     fontSize: 18,
@@ -204,7 +267,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   footerLine: {
-    marginTop:20,
+    marginTop: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#fff',
   },
@@ -214,12 +277,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: '#fff',
-    marginTop: 10,
+    color: 'white',
   },
   footercampusText: {
     fontSize: 16,
-    color: '#fff',
+    color: 'white',
   },
 });
 

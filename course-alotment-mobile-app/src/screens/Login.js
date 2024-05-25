@@ -23,7 +23,7 @@ const Login = ({ navigation, route }) => {
         }
     
         try {
-            const response = await fetch(`http://192.168.10.10:3001${endpoint}`, {
+            const response = await fetch(`http://192.168.242.85:3001${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const Login = ({ navigation, route }) => {
             if (response.ok) {
                 // Login successful
                 console.warn('Login successful:', responseData);
-                navigation.navigate("main");
+                navigation.navigate("Main_Screen");
             } else {
                 // Login failed
                 console.warn('Login failed:', responseData.message);

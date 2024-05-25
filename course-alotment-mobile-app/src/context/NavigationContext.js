@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
+// import { useRoute } from '@react-navigation/native'; // Import useRoute from @react-navigation/native
 
-export const NavigationContext = createContext();
+const NavigationContext = createContext();
 
 export const useNavigation = () => {
   const context = useContext(NavigationContext);
@@ -10,14 +11,15 @@ export const useNavigation = () => {
   return context;
 };
 
+
 export const NavigationProvider = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("timetable");
 
   const navigateTo = (page) => {
-    console.log("Navigating to:", page);
+    console.log('page at' , page)
     setCurrentPage(page);
   };
-  
+
   return (
     <NavigationContext.Provider value={{ currentPage, navigateTo }}>
       {children}

@@ -9,11 +9,12 @@ import { Courses } from '../layouts/courses.layout';
 import { Contact } from '../layouts/contact.layout';
 import { Settings } from '../layouts/settings.layout';
 
+
 export const LayoutController = () => {
   const { currentPage } = useNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView >
       {currentPage === 'home' && <Home />}
       {currentPage === 'profile' && <Profile />}
       {currentPage === 'timetable' && <Timetable />}
@@ -21,6 +22,10 @@ export const LayoutController = () => {
       {currentPage === 'courses' && <Courses />}
       {currentPage === 'contact' && <Contact />}
       {currentPage === 'settings' && <Settings />}
+
+      
     </SafeAreaView>
   );
 };
+
+export default LayoutController;

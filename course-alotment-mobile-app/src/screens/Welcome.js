@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import welcomelogo from '../../assets/images/mainlogo.png';
 import { RadioButton } from 'react-native-paper';
 
+// import { useNavigation } from '@react-navigation/native';
+
 const Welcome = ({ navigation }) => {
     const [role, setRole] = useState('');
     const handleContinue = () => {
-        navigation.navigate('login', { role });
+        navigation.navigate('Login_Screen', { role });
     };
     return (
         <View style={styles.container}>
