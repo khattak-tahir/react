@@ -18,7 +18,11 @@ export function BottomNav({ navigation }) {
   
   const { role } = route.params || {};
   const handleLogout = () => {
-    navigation.navigate('welcome', {role});
+    navigation.navigate('Welcome_Screen', {role});
+  };
+
+  const handleProfile = () => {
+    navigateTo('profile', {role});
   };
   return (
     <NativeBaseProvider>
@@ -83,7 +87,7 @@ export function BottomNav({ navigation }) {
             opacity={currentPage === 'profile' ? 1 : 0.5}
             py="2"
             flex={1}
-            onPress={() => navigateTo('profile')}
+            onPress={handleProfile}
           >
             <Center>
               <Icon

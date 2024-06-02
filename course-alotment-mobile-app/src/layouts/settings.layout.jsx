@@ -43,7 +43,7 @@ export const Settings = () => {
         <Text style={[styles.headerText, darkMode && styles.darkModeText]}>Settings</Text>
         <View style={styles.imageContainer}>
           <Image
-            source={require('../component/contact.png')}
+            source={require('../component/setting2.png')}
             style={styles.image}
             resizeMode="cover"
           />

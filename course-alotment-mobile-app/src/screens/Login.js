@@ -23,7 +23,7 @@ const Login = ({ navigation, route }) => {
         }
     
         try {
-            const response = await fetch(`http://192.168.242.85:3001${endpoint}`, {
+            const response = await fetch(`http://192.168.225.85:3001${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

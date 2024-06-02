@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
 });
 
 const Main = ({ navigation }) => {
+
+  
   return (
     <NavigationProvider>
       <SafeAreaView style={styles.container}>

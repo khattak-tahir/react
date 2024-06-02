@@ -1,90 +1,131 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Flex,
-    Table,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    useColorModeValue,
-    Button,
-    TableCaption,
-    TableContainer,
-    
-  } from "@chakra-ui/react";
-   
-import axios from 'axios';
-import Card from "../component/Card";
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
+const CoursesScreen = () => {
+  const [courses, setCourses] = useState([]);
 
-export default function Courses(props) {
-    const { columnsData } = props;
-    const [coursesData, setCoursesData] = useState([]);
-  
-    useEffect(() => {
-      fetchCourses();
-    }, []);
-  
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get('http://192.168.242.85:3001/courses');
-        setCoursesData(response.data);
-      } catch (error) {
-        toast.error('Failed to fetch courses');
-      }
-    };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
-    const textColor = useColorModeValue("secondaryGray.900", "white");
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch('http://192.168.225.85:3001/courses');
+      const data = await response.json();
+      setCourses(data);
+    } catch (error) {
+      console.error('Failed to fetch courses: ', error);
+    }
+  };
+
+  const renderHeader = () => (
+    <View style={styles.headerContainer}>
+      <View style={styles.heading}>
+        <Text style={styles.headingText}>All Courses</Text>
+      </View>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>ID</Text>
+        <Text style={styles.headerText}>Name</Text>
+        <Text style={styles.headerText}>Course Code</Text>
+        <Text style={styles.headerText}>Description</Text>
+      </View>
+    </View>
+  );
+
+  const renderItem = ({ item }) => (
+    <View style={styles.row}>
+      <Text style={styles.text}>{item.id}</Text>
+      <Text style={styles.text}>{item.name}</Text>
+      <Text style={styles.text}>{item.course_code}</Text>
+      <Text style={styles.text}>{item.description}</Text>
+    </View>
+  );
+
   return (
-    <Card
-      direction="column"
-      w="100%"
-      px="0px"
-      overflowX={{ sm: "scroll", lg: "hidden" }}
-    >
-        
-      <Flex px="25px" justify="space-between" mb="20px" align="center">
-        <Text
-          color={textColor}
-          fontSize="22px"
-          fontWeight="700"
-          lineHeight="100%"
-        >
-          All Courses
-        </Text>
-      </Flex>
-      <TableContainer>
-        <Table variant='simple'>
-          <TableCaption>Table for all the courses</TableCaption>
-          <Thead>
-            <Tr>
-              {
-                columnsData.map((items) => {
-                  return (
-                    <Th key={items.Header}>{items.Header}</Th>
-                  )
-                })
-              }
-            </Tr>
-          </Thead>
-          <Tbody>
-            {
-              coursesData.map(items => <Tr key={items.name}>
-                <Td>{items.id}</Td>
-                <Td>{items.name}</Td>
-                <Td>{items.course_code}</Td>
-                <Td>{items.description}</Td>
-                <Td>{items.createdAt}</Td>
-                <Td>{items.updatedAt}</Td>
-                
-              </Tr>)
-            }
+    <View style={styles.container}>
+      {renderHeader()}
+      <FlatList
+        data={courses}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+      />
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>PMAS ARID UNIVERSITY</Text>
+        <View style={styles.uiitContainer}>
+          <Text style={styles.uiitText}>(UIIT)</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
 
-          </Tbody>
-        </Table>
-      </TableContainer>
-      </Card>
-      );
-}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    // flex:0.5,
+    backgroundColor: 'green',
+  },
+  heading: {
+    backgroundColor: 'green',
+    marginTop: 35,
+    padding: 10,
+    alignItems: 'center',
+  },
+  headingText: {
+    color: 'black',
+    fontSize: 27,
+    fontWeight: 'bold',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    fontWeight: 'bold',
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc',
+  },
+  headerText: {
+    flex: 1,
+    textAlign: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc',
+  },
+  text: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  footer: {
+    backgroundColor: 'black',
+    alignItems: 'center',
+    paddingBottom: 10,
+    paddingTop:10,
+    borderTopRightRadius: 80,
+    borderTopLeftRadius: 80,
+
+
+  },
+  footerText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  uiitContainer: {
+    backgroundColor: 'black',
+  },
+  uiitText: {
+    color: 'white',
+    fontSize: 18,
+  },
+});
+
+export default CoursesScreen;

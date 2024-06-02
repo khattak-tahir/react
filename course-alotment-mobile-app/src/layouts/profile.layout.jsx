@@ -2,32 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
+import { useRoute } from '@react-navigation/native';
 
-const Profile = ({ route }) => {
+export const Profile = (role) => {
   const [profileData, setProfileData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { role } = route.params;
-
-  const fetchProfileData = async () => {
-    const endpoint = role === 'teacher' ? 'teachers' : 'students';
-    try {
-      const response = await fetch(`http://192.168.242.85:3001/${endpoint}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch profile data');
-      }
-      const data = await response.json();
-      setProfileData(data);
-    } catch (error) {
-      console.error('Error fetching profile data:', error);
-    }
-  };
+  const route = useRoute();
+  // const { role } = route.params || {};
 
   useEffect(() => {
-    fetchProfileData();
-  }, []);
+    const fetchProfileData = async () => {
+      try {
+        const endpoint = role === 'teacher' ? '/teachers' : '/students';
+        const response = await axios.get(`http://192.168.225.85:3001/${endpoint}`);
+        const data = response.data;
+
+        if (role === 'teacher') {
+          const { name, cnic, teacherid, qualification, gender} = data;
+          setProfileData({
+            name,
+            cnic,
+            teacherId: teacherid,
+            qualification,
+            gender,
+            
+          });
+        } else {
+          const { name, cnic, aridno, degree, semester } = data;
+          setProfileData({
+            name,
+            cnic,
+            aridNo: aridno,
+            degree,
+            semester,
+          
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
+      }
+    };
+
+    if (role) {
+      fetchProfileData();
+    }
+  }, [role]);
 
   const pickImage = async () => {
-    console.log("Pick image function called");
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -35,17 +58,16 @@ const Profile = ({ route }) => {
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.cancelled) {
       setSelectedImage(result.assets[0].uri);
     } else {
-      console.log("Image picking cancelled");
+      console.log('Image picking cancelled');
     }
   };
 
   if (!profileData) {
     return <Text>Loading...</Text>;
   }
-
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -70,92 +92,6 @@ const Profile = ({ route }) => {
         <View style={styles.container2}>
           <View style={styles.infoRow}>
             <View style={styles.infoFieldContainer}>
-              <Text style={styles.infoField}>Email:</Text>
-            </View>
-            <View style={styles.infoTextContainer}>
-              <Ionicons name="mail" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>{profileData.email}</Text>
-            </View>
-          </View>
-          <View style={styles.rowLine}></View>
-          <View style={styles.infoRow}>
-            <View style={styles.infoFieldContainer}>
-              <Text style={styles.infoField}>Phone no:</Text>
-            </View>
-            <View style={styles.infoTextContainer}>
-              <FontAwesome name="phone" size={24} color="#1a8739" />
-              <Text style={styles.infoText}>{profileData.phone}</Text>
-            </View>
-          </View>
-          <View style={styles.rowLine}></View>
-          {role === 'student' ? (
-            <>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Arid no:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.aridNo}</Text>
-                </View>
-              </View>
-              <View style={styles.rowLine}></View>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Degree:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <Ionicons name="school" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.degree}</Text>
-                </View>
-              </View>
-              <View style={styles.rowLine}></View>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Year:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <Ionicons name="calendar" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.year}</Text>
-                </View>
-              </View>
-            </>
-          ) : (
-            <>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Teacher ID:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.teacherId}</Text>
-                </View>
-              </View>
-              <View style={styles.rowLine}></View>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Qualification:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <Ionicons name="school" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.qualification}</Text>
-                </View>
-              </View>
-              <View style={styles.rowLine}></View>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Department:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <Ionicons name="briefcase" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.department}</Text>
-                </View>
-              </View>
-            </>
-          )}
-          <View style={styles.rowLine}></View>
-          <View style={styles.infoRow}>
-            <View style={styles.infoFieldContainer}>
               <Text style={styles.infoField}>CNIC:</Text>
             </View>
             <View style={styles.infoTextContainer}>
@@ -164,7 +100,72 @@ const Profile = ({ route }) => {
             </View>
           </View>
         </View>
-
+        <View style={styles.rowLine}></View>
+        {role === 'student' ? (
+          <>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Arid no:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.aridNo}</Text>
+              </View>
+            </View>
+            <View style={styles.rowLine}></View>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Degree:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <Ionicons name="school" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.degree}</Text>
+              </View>
+            </View>
+            <View style={styles.rowLine}></View>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Semester:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <Ionicons name="school" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.semester}</Text>
+              </View>
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Teacher ID:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.teacherId}</Text>
+              </View>
+            </View>
+            <View style={styles.rowLine}></View>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Qualification:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <Ionicons name="school" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.qualification}</Text>
+              </View>
+            </View>
+            <View style={styles.rowLine}></View>
+            <View style={styles.infoRow}>
+              <View style={styles.infoFieldContainer}>
+                <Text style={styles.infoField}>Gender:</Text>
+              </View>
+              <View style={styles.infoTextContainer}>
+                <Ionicons name="school" size={24} color="#1a8739" />
+                <Text style={styles.infoText}>{profileData.gender}</Text>
+              </View>
+            </View>
+          </>
+        )}
         {/* Footer */}
         <View style={styles.footerLine}></View>
         <View style={styles.footerContainer}>
@@ -236,47 +237,57 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   designation: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
+    textAlign: 'center',
   },
   infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 10,
-    marginTop: 20,
+  },
+  infoFieldContainer: {
+    flex: 1,
+    marginRight: 10,
   },
   infoField: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 10,
   },
   infoTextContainer: {
+    flex: 2,
     flexDirection: 'row',
-    marginBottom: 10,
+    alignItems: 'center',
   },
   infoText: {
-    fontSize: 18,
-    color: '#2c3e50',
+    fontSize: 16,
+    color: '#34495e',
     marginLeft: 10,
   },
   rowLine: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    marginBottom: 10,
+    height: 1,
+    backgroundColor: '#dcdcdc',
+    marginVertical: 10,
   },
   footerLine: {
-    marginTop: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#fff',
+    height: 3,
+    backgroundColor: 'black',
+    marginVertical: 10,
   },
   footerContainer: {
+    backgroundColor: '#1a8739',
     alignItems: 'center',
-    marginBottom: 80,
+    paddingVertical: 5,
   },
   footerText: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: 'white',
   },
   footercampusText: {

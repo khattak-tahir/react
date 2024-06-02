@@ -68,7 +68,7 @@ export const Contact = () => {
         <View style={styles.blackTop}>
           <View style={styles.imageContainer}>
             <Image
-              source={require('../component/contact.png')} 
+              source={require('../component/contact4.png')} 
               style={styles.image}
               resizeMode="cover"
             />
