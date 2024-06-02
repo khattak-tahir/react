@@ -38,8 +38,8 @@ const Login = ({ navigation, route }) => {
     
             if (response.ok) {
                 // Login successful
-                console.warn('Login successful:', responseData);
-                navigation.navigate("Main_Screen");
+                // console.warn('Login successful:', responseData);
+                navigation.navigate("Main_Screen", { user: responseData[role], role: role });
             } else {
                 // Login failed
                 console.warn('Login failed:', responseData.message);

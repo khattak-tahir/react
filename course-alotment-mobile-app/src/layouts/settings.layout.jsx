@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Linking } from 'react-native';
 import { StyleSheet, Text, View, ScrollView, Image, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
-
-export const Settings = () => {
+// import { useRoute } from '@react-navigation/native';
+// import { useNavigation } from '../context/NavigationContext';
+// import { useNavigation } from '@react-navigation/native';
+export const Settings = ( {navigation}) => {
   const [darkMode, setDarkMode] = useState(false);
+  // const route = useRoute();
+  // const { role } = route.params;
   const [captionIndex, setCaptionIndex] = useState(0); // State for current caption index
   const captions = [
     "Real-time updates for a dynamic academic experience.",
@@ -25,7 +29,8 @@ export const Settings = () => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
-
+  // const { navigateTo } = useNavigation();
+ 
   const handleProfilePress = () => {
     navigation.navigate('Profile');
   };
@@ -59,7 +64,7 @@ export const Settings = () => {
           
           <Text style={[styles.settingLabel, darkMode && styles.darkModeText]}>Profile</Text>
           </View>
-          <TouchableOpacity onPress={()=> handleProfilePress()}>
+          <TouchableOpacity onPress={handleProfilePress}>
           <View style={styles.settingValueContainer}>
             <Text style={[styles.settingValue, !darkMode && { color: '#525252' }]}>Go to profile</Text>
             <View style={styles.iconarrow}>

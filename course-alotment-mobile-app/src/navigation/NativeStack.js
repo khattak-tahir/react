@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-
+import Profile from '../layouts/profile.layout';
 import Settings from '../layouts/settings.layout';
 import Welcome from '../screens/Welcome';
 import Login from '../screens/Login';
@@ -26,6 +26,8 @@ export function MyNativeStack() {
     <Stack.Screen name="Courses_Screen" component={Courses} />
     <Stack.Screen name="Contact_Screen" component={Contact} />
     <Stack.Screen name="Settings_Screen" component={Settings} />
+    <Stack.Screen name="Profile" component={Profile} />  
+
 
 
 

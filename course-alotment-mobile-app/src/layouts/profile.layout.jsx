@@ -1,54 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
 
-export const Profile = (role) => {
+export const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const route = useRoute();
-  // const { role } = route.params || {};
+  const { user, role } = route.params;
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const endpoint = role === 'teacher' ? '/teachers' : '/students';
-        const response = await axios.get(`http://192.168.225.85:3001/${endpoint}`);
-        const data = response.data;
-
-        if (role === 'teacher') {
-          const { name, cnic, teacherid, qualification, gender} = data;
-          setProfileData({
-            name,
-            cnic,
-            teacherId: teacherid,
-            qualification,
-            gender,
-            
-          });
-        } else {
-          const { name, cnic, aridno, degree, semester } = data;
-          setProfileData({
-            name,
-            cnic,
-            aridNo: aridno,
-            degree,
-            semester,
-          
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-        Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
-      }
-    };
-
-    if (role) {
-      fetchProfileData();
+    if (user) {
+      setProfileData(user);
+    } else {
+      Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
     }
-  }, [role]);
+  }, [user]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,7 +26,7 @@ export const Profile = (role) => {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
     } else {
       console.log('Image picking cancelled');
@@ -68,6 +36,7 @@ export const Profile = (role) => {
   if (!profileData) {
     return <Text>Loading...</Text>;
   }
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -99,17 +68,18 @@ export const Profile = (role) => {
               <Text style={styles.infoText}>{profileData.cnic}</Text>
             </View>
           </View>
-        </View>
+        
         <View style={styles.rowLine}></View>
         {role === 'student' ? (
           <>
+          
             <View style={styles.infoRow}>
               <View style={styles.infoFieldContainer}>
                 <Text style={styles.infoField}>Arid no:</Text>
               </View>
               <View style={styles.infoTextContainer}>
                 <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.aridNo}</Text>
+                <Text style={styles.infoText}>{profileData.aridno}</Text>
               </View>
             </View>
             <View style={styles.rowLine}></View>
@@ -132,7 +102,9 @@ export const Profile = (role) => {
                 <Text style={styles.infoText}>{profileData.semester}</Text>
               </View>
             </View>
+            
           </>
+          
         ) : (
           <>
             <View style={styles.infoRow}>
@@ -141,7 +113,7 @@ export const Profile = (role) => {
               </View>
               <View style={styles.infoTextContainer}>
                 <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.teacherId}</Text>
+                <Text style={styles.infoText}>{profileData.teacherid}</Text>
               </View>
             </View>
             <View style={styles.rowLine}></View>
@@ -165,7 +137,9 @@ export const Profile = (role) => {
               </View>
             </View>
           </>
+          
         )}
+        </View>
         {/* Footer */}
         <View style={styles.footerLine}></View>
         <View style={styles.footerContainer}>
@@ -250,10 +224,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
+    backgroundColor: 'white', // Adjusted to apply background color to infoRow
+    paddingHorizontal: 20, // Added paddingHorizontal for spacing
+    paddingVertical: 10, // Added paddingVertical for spacing
+    borderRadius: 10, // Added borderRadius for rounded corners
   },
   infoFieldContainer: {
-    flex: 1,
     marginRight: 10,
+    flex: 1,
+    backgroundColor: 'white', // Adjusted to apply background color to infoFieldContainer
   },
   infoField: {
     fontSize: 16,
@@ -264,6 +243,7 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'white', // Adjusted to apply background color to infoTextContainer
   },
   infoText: {
     fontSize: 16,
@@ -281,7 +261,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   footerContainer: {
-    backgroundColor: '#1a8739',
+    backgroundColor: '#0000',
     alignItems: 'center',
     paddingVertical: 5,
   },
@@ -291,9 +271,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   footercampusText: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: 'white',
   },
 });
+
 
 export default Profile;

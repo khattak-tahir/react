@@ -16,13 +16,13 @@ export function BottomNav({ navigation }) {
   const route = useRoute();
   const { navigateTo, currentPage } = useNavigation();
   
-  const { role } = route.params || {};
+  const { role, user } = route.params || {};
   const handleLogout = () => {
     navigation.navigate('Welcome_Screen', {role});
   };
 
   const handleProfile = () => {
-    navigateTo('profile', {role});
+    navigateTo('profile', {role, user});
   };
   return (
     <NativeBaseProvider>

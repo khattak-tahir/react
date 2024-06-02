@@ -153,6 +153,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     paddingVertical: 15,
+    // borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+
+
   },
   footerText: {
     color: 'white',
