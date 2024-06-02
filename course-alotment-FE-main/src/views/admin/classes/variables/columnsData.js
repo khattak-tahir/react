@@ -21,6 +21,10 @@ export const columnsDataCheck = [
     accessor: "Shift",
   },
   {
+    Header: "DAY",
+    accessor: "Day",
+  },
+  {
     Header: "CLASSROOM",
     accessor: "Classroom",
   },

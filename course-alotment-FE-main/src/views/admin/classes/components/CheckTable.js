@@ -43,6 +43,7 @@ export default function CheckTable(props) {
   const [semester, setSemester] = useState('');
   const [section, setSection] = useState('');
   const [shift, setShift] = useState('');
+  const [day, setDay] = useState('');
   const [classroom, setClassroom] = useState('');
   const [classTime, setClassTime] = useState('');
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -50,7 +51,7 @@ export default function CheckTable(props) {
 
   useEffect(() => {
     fetchTeachers();
-    fetchClasses()
+    fetchClasses();
   }, []);
 
   const fetchClasses = async () => {
@@ -78,6 +79,7 @@ export default function CheckTable(props) {
         semester: semester.value,
         section: section.value,
         shift: shift.value,
+        day: day.value,
         classroom,
         classtime: classTime,
         teacher: selectedTeacher.value,
@@ -96,6 +98,7 @@ export default function CheckTable(props) {
       setSemester("");
       setSection("");
       setShift("");
+      setDay("");
       setClassroom("");
       setClassTime("");
       setSelectedTeacher(null);
@@ -124,6 +127,7 @@ export default function CheckTable(props) {
     setSemester({ value: classData.semester, label: classData.semester });
     setSection({ value: classData.section, label: classData.section });
     setShift({ value: classData.shift, label: classData.shift });
+    setDay({ value: classData.day, label: classData.day });
     setClassroom(classData.classroom);
     setClassTime(classData.classtime);
     setSelectedTeacher({ value: classData.teacher, label: classData.teacher });
@@ -137,7 +141,7 @@ export default function CheckTable(props) {
     const { courses } = teachers.find(teacher => teacher.name === selectedTeacher.value) || { courses: [] };
 
     return courses.map(course => ({ value: course, label: course }));
-  }
+  };
 
   const uploadFile = async (file) => {
     const formData = new FormData();
@@ -153,6 +157,7 @@ export default function CheckTable(props) {
       toast.error('Failed to upload file');
     }
   };
+
   return (
     <Card
       direction="column"
@@ -212,6 +217,7 @@ export default function CheckTable(props) {
                 <Td>{items.semester}</Td>
                 <Td>{items.section}</Td>
                 <Td>{items.shift}</Td>
+                <Td>{items.day}</Td>
                 <Td>{items.classroom}</Td>
                 <Td>{items.classtime}</Td>
                 <Td>{items.teacher}</Td>
@@ -270,6 +276,15 @@ export default function CheckTable(props) {
             </FormControl>
 
             <FormControl mt={4}>
+              <FormLabel>Day</FormLabel>
+              <Select
+                value={day}
+                onChange={(e) => setDay(e)}
+                options={[{ value: "Monday", label: "Monday" }, { value: "Tuesday", label: "Tuesday" }, { value: "Wednesday", label: "Wednesday" }, { value: "Thursday", label: "Thursday" }, { value: "Friday", label: "Friday" }]}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
               <FormLabel>Classroom</FormLabel>
               <Input value={classroom} onChange={(e) => setClassroom(e.target.value)} />
             </FormControl>
@@ -308,7 +323,6 @@ export default function CheckTable(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-
     </Card>
   );
 }

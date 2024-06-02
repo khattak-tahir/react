@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import logo from '../../assets/images/mainlogo.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { button1 } from "../common/button";
 import { label, input, formgroup } from "../common/formcss";
+import { useUser } from '../context/UserContext';
+
 const Login = ({ navigation, route }) => {
     const { role } = route.params;
+    const { setUser, setRole } = useUser();
+    useEffect(() => {
+        setRole(role)
+    }, [])
     const [teacherid, setTeacherId] = useState("");
     const [aridno, setAridNo] = useState("");
     const [password, setPassword] = useState("");
@@ -15,15 +21,15 @@ const Login = ({ navigation, route }) => {
         const endpoint = role === 'teacher' ? '/teacherlogin' : '/studentlogin';
         const userId = role === 'teacher' ? teacherid : aridno;
         const userIdField = role === 'teacher' ? 'teacherid' : 'aridno';
-    
+
         // Check if user ID and password are provided
         if (!userId || !password) {
             alert('Please enter your credentials.');
             return;
         }
-    
+
         try {
-            const response = await fetch(`http://192.168.225.85:3001${endpoint}`, {
+            const response = await fetch(`http://192.168.100.19:3001${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,13 +39,15 @@ const Login = ({ navigation, route }) => {
                     password: password
                 })
             });
-    
+
+
             const responseData = await response.json();
-    
+
             if (response.ok) {
                 // Login successful
-                // console.warn('Login successful:', responseData);
-                navigation.navigate("Main_Screen", { user: responseData[role], role: role });
+                setUser(responseData[role]);
+                console.warn('Login successful:', responseData);
+                navigation.navigate("Main_Screen");
             } else {
                 // Login failed
                 console.warn('Login failed:', responseData.message);
@@ -50,7 +58,7 @@ const Login = ({ navigation, route }) => {
             alert('An error occurred during login');
         }
     };
-        
+
     return (
         <View style={styles.container}>
             <View style={styles.container1}>

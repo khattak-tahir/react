@@ -22,8 +22,6 @@ export const LayoutController = () => {
       {currentPage === 'courses' && <Courses />}
       {currentPage === 'contact' && <Contact />}
       {currentPage === 'settings' && <Settings />}
-
-      
     </SafeAreaView>
   );
 };

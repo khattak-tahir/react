@@ -10,7 +10,7 @@ const CoursesScreen = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://192.168.225.85:3001/courses');
+      const response = await fetch('http://192.168.100.19:3001/courses');
       const data = await response.json();
       setCourses(data);
     } catch (error) {
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     paddingBottom: 10,
-    paddingTop:10,
+    paddingTop: 10,
     borderTopRightRadius: 80,
     borderTopLeftRadius: 80,
 

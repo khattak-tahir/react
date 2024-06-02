@@ -10,7 +10,7 @@ const TeachersScreen = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('http://192.168.225.85:3001/teachers');
+      const response = await fetch('http://192.168.100.19:3001/teachers');
       const data = await response.json();
       setTeachers(data);
     } catch (error) {
@@ -42,41 +42,41 @@ const TeachersScreen = () => {
 
   return (
     <View style={styles.container}>
-    <ScrollView style={styles.container} horizontal={false}>
-      <View>
-        <View style={styles.headingContainer}>
-          <Text style={styles.headingText}>All Teachers</Text>
-        </View>
-      </View>
-      <ScrollView horizontal={true}>
+      <ScrollView style={styles.container} horizontal={false}>
         <View>
-          <View style={styles.row}>
-            <View style={[styles.cell, styles.idCell]}>
-              <Text style={styles.headerText}>ID</Text>
-            </View>
-            <View style={[styles.cell, styles.nameCell]}>
-              <Text style={styles.headerText}>Name</Text>
-            </View>
-            <View style={[styles.cell, styles.qualificationCell]}>
-              <Text style={styles.headerText}>Qualification</Text>
-            </View>
-            <View style={[styles.cell, styles.genderCell]}>
-              <Text style={styles.headerText}>Gender</Text>
-            </View>
-            <View style={[styles.cell, styles.courseCell]}>
-              <Text style={styles.headerText}>Course Code</Text>
-            </View>
+          <View style={styles.headingContainer}>
+            <Text style={styles.headingText}>All Teachers</Text>
           </View>
-          <FlatList
-            data={teachers}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-          />
         </View>
+        <ScrollView horizontal={true}>
+          <View>
+            <View style={styles.row}>
+              <View style={[styles.cell, styles.idCell]}>
+                <Text style={styles.headerText}>ID</Text>
+              </View>
+              <View style={[styles.cell, styles.nameCell]}>
+                <Text style={styles.headerText}>Name</Text>
+              </View>
+              <View style={[styles.cell, styles.qualificationCell]}>
+                <Text style={styles.headerText}>Qualification</Text>
+              </View>
+              <View style={[styles.cell, styles.genderCell]}>
+                <Text style={styles.headerText}>Gender</Text>
+              </View>
+              <View style={[styles.cell, styles.courseCell]}>
+                <Text style={styles.headerText}>Course Code</Text>
+              </View>
+            </View>
+            <FlatList
+              data={teachers}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </View>
+        </ScrollView>
+
       </ScrollView>
-      
-    </ScrollView>
-    <View style={styles.footerContainer}>
+      <View style={styles.footerContainer}>
         <Text style={styles.footerText}>PMAS ARID UNIVERSITY</Text>
         <Text style={styles.footerSubText}>(UIIT)</Text>
       </View>

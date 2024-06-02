@@ -11,7 +11,7 @@ model students {
     id           Int      @id @default(autoincrement())
     name         String
     cnic         Int      @unique
-    aridno       String @unique
+    aridno       String   @unique
     degree       String
     shift        String
     semester     String
@@ -37,17 +37,19 @@ model teachers {
 }
 
 model classes {
-    id        Int      @id @default(autoincrement())
-    name      String
-    semester  String
-    section   String
-    shift     String
-    classroom String   @unique
-    classtime String
-    teacher   String
-    course    String
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    id            Int      @id @default(autoincrement())
+    name          String
+    semester      String
+    section       String
+    shift         String
+    day           String
+    classroom     String   @unique
+    classtime     String
+    classtime_end String
+    teacher       String
+    course        String
+    createdAt     DateTime @default(now())
+    updateAt      DateTime @updatedAt
 }
 
 model reports {

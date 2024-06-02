@@ -11,10 +11,41 @@ export const Profile = () => {
   const { user, role } = route.params;
 
   useEffect(() => {
-    if (user) {
-      setProfileData(user);
-    } else {
-      Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
+    const fetchProfileData = async () => {
+      try {
+        const endpoint = role === 'teacher' ? '/teachers' : '/students';
+        const response = await axios.get(`http://192.168.100.19:3001/${endpoint}`);
+        const data = response.data;
+
+        if (role === 'teacher') {
+          const { name, cnic, teacherid, qualification, gender } = data;
+          setProfileData({
+            name,
+            cnic,
+            teacherId: teacherid,
+            qualification,
+            gender,
+
+          });
+        } else {
+          const { name, cnic, aridno, degree, semester } = data;
+          setProfileData({
+            name,
+            cnic,
+            aridNo: aridno,
+            degree,
+            semester,
+
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
+      }
+    };
+
+    if (role) {
+      fetchProfileData();
     }
   }, [user]);
 
@@ -68,77 +99,77 @@ export const Profile = () => {
               <Text style={styles.infoText}>{profileData.cnic}</Text>
             </View>
           </View>
-        
-        <View style={styles.rowLine}></View>
-        {role === 'student' ? (
-          <>
-          
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Arid no:</Text>
+
+          <View style={styles.rowLine}></View>
+          {role === 'student' ? (
+            <>
+
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Arid no:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.aridno}</Text>
+                </View>
               </View>
-              <View style={styles.infoTextContainer}>
-                <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.aridno}</Text>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Degree:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.degree}</Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.rowLine}></View>
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Degree:</Text>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Semester:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.semester}</Text>
+                </View>
               </View>
-              <View style={styles.infoTextContainer}>
-                <Ionicons name="school" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.degree}</Text>
+
+            </>
+
+          ) : (
+            <>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Teacher ID:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.teacherid}</Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.rowLine}></View>
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Semester:</Text>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Qualification:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.qualification}</Text>
+                </View>
               </View>
-              <View style={styles.infoTextContainer}>
-                <Ionicons name="school" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.semester}</Text>
+              <View style={styles.rowLine}></View>
+              <View style={styles.infoRow}>
+                <View style={styles.infoFieldContainer}>
+                  <Text style={styles.infoField}>Gender:</Text>
+                </View>
+                <View style={styles.infoTextContainer}>
+                  <Ionicons name="school" size={24} color="#1a8739" />
+                  <Text style={styles.infoText}>{profileData.gender}</Text>
+                </View>
               </View>
-            </View>
-            
-          </>
-          
-        ) : (
-          <>
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Teacher ID:</Text>
-              </View>
-              <View style={styles.infoTextContainer}>
-                <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.teacherid}</Text>
-              </View>
-            </View>
-            <View style={styles.rowLine}></View>
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Qualification:</Text>
-              </View>
-              <View style={styles.infoTextContainer}>
-                <Ionicons name="school" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.qualification}</Text>
-              </View>
-            </View>
-            <View style={styles.rowLine}></View>
-            <View style={styles.infoRow}>
-              <View style={styles.infoFieldContainer}>
-                <Text style={styles.infoField}>Gender:</Text>
-              </View>
-              <View style={styles.infoTextContainer}>
-                <Ionicons name="school" size={24} color="#1a8739" />
-                <Text style={styles.infoText}>{profileData.gender}</Text>
-              </View>
-            </View>
-          </>
-          
-        )}
+            </>
+
+          )}
         </View>
         {/* Footer */}
         <View style={styles.footerLine}></View>
