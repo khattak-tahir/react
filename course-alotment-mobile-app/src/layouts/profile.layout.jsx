@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRoute } from '@react-navigation/native';
 
@@ -98,7 +99,7 @@ export const Profile = () => {
                 <Text style={styles.infoField}>Semester:</Text>
               </View>
               <View style={styles.infoTextContainer}>
-                <Ionicons name="school" size={24} color="#1a8739" />
+                <MaterialIcons name="class" size={24} color="#1a8739" />
                 <Text style={styles.infoText}>{profileData.semester}</Text>
               </View>
             </View>
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     marginBottom: 10,
     marginTop: 40,
     textAlign: 'center',

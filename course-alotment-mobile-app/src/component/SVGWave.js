@@ -11,6 +11,7 @@ const SVGWave = ({ customStyles }) => {
       textAlign: 'center',
       marginTop: 70,
       fontWeight: 'bold',
+      color: 'white'
     },
   });
 

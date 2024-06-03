@@ -57,7 +57,7 @@ export const Home = () => {
             onPress={() => navigation.navigate('Teachers_Screen')}
           >
             
-            <FontAwesome5 name="chalkboard-teacher" size={34} color="black" />
+            <FontAwesome5 name="chalkboard-teacher" size={32} color="white" />
             <Text style={styles.cardText}>Teachers</Text>
           </TouchableOpacity>
 
@@ -67,7 +67,7 @@ export const Home = () => {
             onPress={() => navigation.navigate('Courses_Screen')}
           >
            
-            <FontAwesome name="book" size={34} color="black" />
+            <FontAwesome name="book" size={34} color="white" />
             <Text style={styles.cardText}>Courses</Text>
           </TouchableOpacity>
 
@@ -77,7 +77,7 @@ export const Home = () => {
             onPress={() => navigation.navigate('Contact_Screen')}
           >
            
-            <MaterialIcons name="contact-support" size={34} color="black" />
+            <MaterialIcons name="contact-support" size={38} color="white" />
             <Text style={styles.cardText}>Contact Us</Text>
           </TouchableOpacity>
 
@@ -86,7 +86,7 @@ export const Home = () => {
             style={styles.card}
             onPress={() => navigation.navigate('Settings_Screen')}
           >
-            <Ionicons name="settings-sharp" size={34} color="black" />
+            <Ionicons name="settings-sharp" size={34} color="white" />
             <Text style={styles.cardText}>Settings</Text>
           </TouchableOpacity>
        

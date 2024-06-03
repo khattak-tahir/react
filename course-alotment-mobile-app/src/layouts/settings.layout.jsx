@@ -142,10 +142,10 @@ const styles = StyleSheet.create({
     marginTop:35,
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 'bold',
-    textAlign: 'left',
-    color: 'black', // Default text color
+    textAlign: 'center',
+    color: 'white', // Default text color
   },
   imageContainer: {
     alignItems: 'center',

@@ -93,13 +93,14 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 45,
     paddingLeft: 45,
-    alignItems: 'flex-start',
+    // alignItems: 'flex-start',
     borderBottomLeftRadius: 60,
   },
   headingText: {
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     fontSize: 25,
+    textAlign:'center'
   },
   row: {
     marginTop: 20,
