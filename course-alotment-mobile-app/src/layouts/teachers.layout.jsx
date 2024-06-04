@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet, ScrollView } from "react-native";
 
 const TeachersScreen = () => {
   const [teachers, setTeachers] = useState([]);
@@ -10,11 +10,11 @@ const TeachersScreen = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('http://192.168.100.19:3001/teachers');
+      const response = await fetch("http://192.168.100.3:3001/teachers");
       const data = await response.json();
       setTeachers(data);
     } catch (error) {
-      console.error('Failed to fetch teachers: ', error);
+      console.error("Failed to fetch teachers: ", error);
     }
   };
 
@@ -74,7 +74,6 @@ const TeachersScreen = () => {
             />
           </View>
         </ScrollView>
-
       </ScrollView>
       <View style={styles.footerContainer}>
         <Text style={styles.footerText}>PMAS ARID UNIVERSITY</Text>
@@ -89,82 +88,77 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headingContainer: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
     padding: 20,
     paddingTop: 45,
     paddingLeft: 45,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
     borderBottomLeftRadius: 60,
   },
   headingText: {
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold",
     fontSize: 25,
   },
   row: {
     marginTop: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
+    borderBottomColor: "#cccccc",
   },
   cell: {
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   idCell: {
     minWidth: 60,
-    alignItems: 'center',
+    alignItems: "center",
   },
   nameCell: {
     minWidth: 150,
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   qualificationCell: {
     minWidth: 150,
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   genderCell: {
     minWidth: 100,
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   courseCell: {
     minWidth: 200,
-    alignItems: 'center',
+    alignItems: "center",
   },
   headerText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
   text: {
-    textAlign: 'center',
-    flexWrap: 'wrap',
+    textAlign: "center",
+    flexWrap: "wrap",
   },
   courseText: {
     // textAlign: 'left',
-    textAlign: 'center',
+    textAlign: "center",
 
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   footerContainer: {
-    backgroundColor: 'black',
-    alignItems: 'center',
+    backgroundColor: "black",
+    alignItems: "center",
     paddingVertical: 15,
     // borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
-
-
   },
   footerText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 18,
   },
   footerSubText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
 });

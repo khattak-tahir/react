@@ -24,26 +24,30 @@ export const Timetable = () => {
 
   const fetchStudentData = async () => {
     try {
-      const response = await fetch(`http://192.168.100.19:3001/students/${user.aridno}`);
+      const response = await fetch(
+        `http://192.168.100.3:3001/students/${user.aridno}`
+      );
       const data = await response.json();
       if (response.ok) {
         setData(data);
       }
     } catch (error) {
-      console.log('Error:', 'Failed to fetch student data');
+      console.log("Error:", "Failed to fetch student data");
     }
   };
 
   const fetchTeacherData = async () => {
     try {
-      const response = await fetch(`http://192.168.100.19:3001/teachers/${user.name}/classes`);
+      const response = await fetch(
+        `http://192.168.100.3:3001/teachers/${user.name}/classes`
+      );
       const data = await response.json();
 
       if (response.ok) {
         setData(data);
       }
     } catch (error) {
-      console.log('Error:', 'Failed to fetch teacher data');
+      console.log("Error:", "Failed to fetch teacher data");
     }
   };
 
@@ -63,14 +67,14 @@ export const Timetable = () => {
 
   const transformClassesData = (classesData) => {
     const dayMap = {
-      "Monday": 1,
-      "Tuesday": 2,
-      "Wednesday": 3,
-      "Thursday": 4,
-      "Friday": 5,
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
     };
 
-    return classesData.map(classData => {
+    return classesData.map((classData) => {
       const {
         classroom,
         classtime,
@@ -80,10 +84,10 @@ export const Timetable = () => {
         name,
         section,
         shift,
-        semester
+        semester,
       } = classData;
 
-      const cleanedClasstimeEnd = classtime_end.replace(/AM|PM/, '').trim();
+      const cleanedClasstimeEnd = classtime_end.replace(/AM|PM/, "").trim();
       const sectionKey = `${semester} ${section}`;
 
       return {
@@ -94,9 +98,9 @@ export const Timetable = () => {
             days: [dayMap[day] ?? 1],
             startTimes: [classtime],
             endTimes: [cleanedClasstimeEnd],
-            locations: [classroom]
-          }
-        }
+            locations: [classroom],
+          },
+        },
       };
     });
   };
@@ -109,7 +113,9 @@ export const Timetable = () => {
             data?.classesData ? transformClassesData(data.classesData) : []
           }
           eventOnPress={(event) => {
-            alert(`${event.courseId} ${event.section} - Start Time:${event.startTime} - End Time:${event.endTime}`);
+            alert(
+              `${event.courseId} ${event.section} - Start Time:${event.startTime} - End Time:${event.endTime}`
+            );
           }}
           theme={greenTheme}
         />

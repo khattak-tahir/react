@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
-import { useRoute } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { useRoute } from "@react-navigation/native";
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -13,11 +26,13 @@ export const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const endpoint = role === 'teacher' ? '/teachers' : '/students';
-        const response = await axios.get(`http://192.168.100.19:3001/${endpoint}`);
+        const endpoint = role === "teacher" ? "/teachers" : "/students";
+        const response = await axios.get(
+          `http://192.168.100.3:3001/${endpoint}`
+        );
         const data = response.data;
 
-        if (role === 'teacher') {
+        if (role === "teacher") {
           const { name, cnic, teacherid, qualification, gender } = data;
           setProfileData({
             name,
@@ -25,7 +40,6 @@ export const Profile = () => {
             teacherId: teacherid,
             qualification,
             gender,
-
           });
         } else {
           const { name, cnic, aridno, degree, semester } = data;
@@ -35,12 +49,14 @@ export const Profile = () => {
             aridNo: aridno,
             degree,
             semester,
-
           });
         }
       } catch (error) {
-        console.error('Error fetching profile data:', error);
-        Alert.alert('Error', 'Failed to fetch profile data. Please try again later.');
+        console.error("Error fetching profile data:", error);
+        Alert.alert(
+          "Error",
+          "Failed to fetch profile data. Please try again later."
+        );
       }
     };
 
@@ -60,7 +76,7 @@ export const Profile = () => {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
     } else {
-      console.log('Image picking cancelled');
+      console.log("Image picking cancelled");
     }
   };
 
@@ -78,7 +94,10 @@ export const Profile = () => {
               {selectedImage ? (
                 <Image source={{ uri: selectedImage }} style={styles.avatar} />
               ) : (
-                <Image source={require('../component/avatar.png')} style={styles.avatar} />
+                <Image
+                  source={require("../component/avatar.png")}
+                  style={styles.avatar}
+                />
               )}
               <View style={styles.editIconContainer}>
                 <AntDesign name="edit" size={24} color="black" />
@@ -86,7 +105,9 @@ export const Profile = () => {
             </TouchableOpacity>
           </View>
           <Text style={styles.name}>{profileData.name}</Text>
-          <Text style={styles.designation}>({role.charAt(0).toUpperCase() + role.slice(1)})</Text>
+          <Text style={styles.designation}>
+            ({role.charAt(0).toUpperCase() + role.slice(1)})
+          </Text>
         </View>
 
         <View style={styles.container2}>
@@ -101,15 +122,18 @@ export const Profile = () => {
           </View>
 
           <View style={styles.rowLine}></View>
-          {role === 'student' ? (
+          {role === "student" ? (
             <>
-
               <View style={styles.infoRow}>
                 <View style={styles.infoFieldContainer}>
                   <Text style={styles.infoField}>Arid no:</Text>
                 </View>
                 <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <MaterialCommunityIcons
+                    name="badge-account"
+                    size={24}
+                    color="#1a8739"
+                  />
                   <Text style={styles.infoText}>{profileData.aridno}</Text>
                 </View>
               </View>
@@ -133,9 +157,7 @@ export const Profile = () => {
                   <Text style={styles.infoText}>{profileData.semester}</Text>
                 </View>
               </View>
-
             </>
-
           ) : (
             <>
               <View style={styles.infoRow}>
@@ -143,7 +165,11 @@ export const Profile = () => {
                   <Text style={styles.infoField}>Teacher ID:</Text>
                 </View>
                 <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
+                  <MaterialCommunityIcons
+                    name="badge-account"
+                    size={24}
+                    color="#1a8739"
+                  />
                   <Text style={styles.infoText}>{profileData.teacherid}</Text>
                 </View>
               </View>
@@ -154,7 +180,9 @@ export const Profile = () => {
                 </View>
                 <View style={styles.infoTextContainer}>
                   <Ionicons name="school" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>{profileData.qualification}</Text>
+                  <Text style={styles.infoText}>
+                    {profileData.qualification}
+                  </Text>
                 </View>
               </View>
               <View style={styles.rowLine}></View>
@@ -168,7 +196,6 @@ export const Profile = () => {
                 </View>
               </View>
             </>
-
           )}
         </View>
         {/* Footer */}
@@ -185,38 +212,38 @@ export const Profile = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: "#000",
   },
   container1: {
-    backgroundColor: '#1a8739',
-    alignItems: 'center',
+    backgroundColor: "#1a8739",
+    alignItems: "center",
     paddingVertical: 20,
     paddingHorizontal: 10,
     borderBottomRightRadius: 80,
-    width: '100%',
+    width: "100%",
   },
   container2: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderTopLeftRadius: 80,
-    width: '100%',
+    width: "100%",
     marginTop: 30,
   },
   avatarContainer: {
-    backgroundColor: '#c8e6c9',
+    backgroundColor: "#c8e6c9",
     borderRadius: 75,
     width: 120,
     height: 120,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 20,
     marginTop: 20,
     borderWidth: 3,
-    borderColor: '#2c3e50',
+    borderColor: "#2c3e50",
   },
   avatar: {
     width: 110,
@@ -224,38 +251,38 @@ const styles = StyleSheet.create({
     borderRadius: 70,
   },
   editIconContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 5,
     right: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 20,
     padding: 5,
   },
   text: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     marginBottom: 10,
     marginTop: 40,
-    textAlign: 'center',
+    textAlign: "center",
   },
   name: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: "center",
   },
   designation: {
     fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
   },
   infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
-    backgroundColor: 'white', // Adjusted to apply background color to infoRow
+    backgroundColor: "white", // Adjusted to apply background color to infoRow
     paddingHorizontal: 20, // Added paddingHorizontal for spacing
     paddingVertical: 10, // Added paddingVertical for spacing
     borderRadius: 10, // Added borderRadius for rounded corners
@@ -263,50 +290,49 @@ const styles = StyleSheet.create({
   infoFieldContainer: {
     marginRight: 10,
     flex: 1,
-    backgroundColor: 'white', // Adjusted to apply background color to infoFieldContainer
+    backgroundColor: "white", // Adjusted to apply background color to infoFieldContainer
   },
   infoField: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2c3e50',
+    fontWeight: "bold",
+    color: "#2c3e50",
   },
   infoTextContainer: {
     flex: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white', // Adjusted to apply background color to infoTextContainer
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white", // Adjusted to apply background color to infoTextContainer
   },
   infoText: {
     fontSize: 16,
-    color: '#34495e',
+    color: "#34495e",
     marginLeft: 10,
   },
   rowLine: {
     height: 1,
-    backgroundColor: '#dcdcdc',
+    backgroundColor: "#dcdcdc",
     marginVertical: 10,
   },
   footerLine: {
     height: 3,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     marginVertical: 10,
   },
   footerContainer: {
-    backgroundColor: '#0000',
-    alignItems: 'center',
+    backgroundColor: "#0000",
+    alignItems: "center",
     paddingVertical: 5,
   },
   footerText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
   footercampusText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
 });
-
 
 export default Profile;

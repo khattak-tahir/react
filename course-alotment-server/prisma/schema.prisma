@@ -10,7 +10,7 @@ datasource db {
 model students {
     id           Int      @id @default(autoincrement())
     name         String
-    cnic         Int      @unique
+    cnic         String      @unique
     aridno       String   @unique
     degree       String
     shift        String
@@ -26,7 +26,7 @@ model students {
 model teachers {
     id            Int      @id @default(autoincrement())
     name          String
-    cnic          Int      @unique
+    cnic          String      @unique
     teacherid     String   @unique
     qualification String
     gender        String
@@ -43,7 +43,7 @@ model classes {
     section       String
     shift         String
     day           String
-    classroom     String   @unique
+    classroom     String   
     classtime     String
     classtime_end String
     teacher       String
