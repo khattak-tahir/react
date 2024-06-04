@@ -28,6 +28,7 @@ export const Timetable = () => {
         `http://192.168.100.3:3001/students/${user.aridno}`
       );
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
         setData(data);
       }
