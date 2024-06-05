@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 
 const CoursesScreen = () => {
   const [courses, setCourses] = useState([]);
@@ -10,11 +10,11 @@ const CoursesScreen = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://192.168.225.85:3001/courses');
+      const response = await fetch("http://192.168.100.3:3001/courses");
       const data = await response.json();
       setCourses(data);
     } catch (error) {
-      console.error('Failed to fetch courses: ', error);
+      console.error("Failed to fetch courses: ", error);
     }
   };
 
@@ -47,7 +47,7 @@ const CoursesScreen = () => {
       <FlatList
         data={courses}
         renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
       />
       <View style={styles.footer}>
         <Text style={styles.footerText}>PMAS ARID UNIVERSITY</Text>
@@ -65,65 +65,67 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     // flex:0.5,
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   heading: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
     marginTop: 35,
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   headingText: {
+<<<<<<< HEAD
     color: 'white',
+=======
+    color: "black",
+>>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
     fontSize: 27,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
-    backgroundColor: '#f0f0f0',
-    fontWeight: 'bold',
+    backgroundColor: "#f0f0f0",
+    fontWeight: "bold",
     borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
+    borderBottomColor: "#cccccc",
   },
   headerText: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
+    borderBottomColor: "#cccccc",
   },
   text: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
   },
   footer: {
-    backgroundColor: 'black',
-    alignItems: 'center',
+    backgroundColor: "black",
+    alignItems: "center",
     paddingBottom: 10,
-    paddingTop:10,
+    paddingTop: 10,
     borderTopRightRadius: 80,
     borderTopLeftRadius: 80,
-
-
   },
   footerText: {
-    color: 'white',
+    color: "white",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   uiitContainer: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   uiitText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
 });

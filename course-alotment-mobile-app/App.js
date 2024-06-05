@@ -8,16 +8,16 @@ import Verification from "./src/screens/Verification";
 import { NavigationProvider } from "./src/context/NavigationContext";
 
 import { MyNativeStack } from "./src/navigation/NativeStack";
+import { UserProvider } from './src/context/UserContext';
+
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    
-    
-    <MyNativeStack />
-
-   
+    <UserProvider>
+      <MyNativeStack />
+    </UserProvider>
   );
 }
 
