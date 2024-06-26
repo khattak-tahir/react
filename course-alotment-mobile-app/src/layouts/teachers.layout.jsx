@@ -92,21 +92,12 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 45,
     paddingLeft: 45,
-<<<<<<< HEAD
-    // alignItems: 'flex-start',
+    alignItems: 'flex-start',
     borderBottomLeftRadius: 60,
   },
   headingText: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
-=======
-    alignItems: "flex-start",
-    borderBottomLeftRadius: 60,
-  },
-  headingText: {
-    color: "black",
-    fontWeight: "bold",
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
     fontSize: 25,
     textAlign:'center'
   },

@@ -1,30 +1,8 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRoute } from '@react-navigation/native';
-=======
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from "react-native";
-import {
-  AntDesign,
-  Ionicons,
-  MaterialCommunityIcons,
-  FontAwesome,
-} from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
-import { useRoute } from "@react-navigation/native";
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -129,7 +107,6 @@ export const Profile = () => {
               <Text style={styles.infoText}>{profileData.cnic}</Text>
             </View>
           </View>
-<<<<<<< HEAD
         
         <View style={styles.rowLine}></View>
         {role === 'student' ? (
@@ -138,24 +115,6 @@ export const Profile = () => {
             <View style={styles.infoRow}>
               <View style={styles.infoFieldContainer}>
                 <Text style={styles.infoField}>Arid no:</Text>
-=======
-
-          <View style={styles.rowLine}></View>
-          {role === "student" ? (
-            <>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Arid no:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons
-                    name="badge-account"
-                    size={24}
-                    color="#1a8739"
-                  />
-                  <Text style={styles.infoText}>{profileData.aridno}</Text>
-                </View>
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
               </View>
               <View style={styles.infoTextContainer}>
                 <MaterialCommunityIcons name="badge-account" size={24} color="#1a8739" />
@@ -167,7 +126,6 @@ export const Profile = () => {
               <View style={styles.infoFieldContainer}>
                 <Text style={styles.infoField}>Degree:</Text>
               </View>
-<<<<<<< HEAD
               <View style={styles.infoTextContainer}>
                 <Ionicons name="school" size={24} color="#1a8739" />
                 <Text style={styles.infoText}>{profileData.degree}</Text>
@@ -177,41 +135,11 @@ export const Profile = () => {
             <View style={styles.infoRow}>
               <View style={styles.infoFieldContainer}>
                 <Text style={styles.infoField}>Semester:</Text>
-=======
-            </>
-          ) : (
-            <>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Teacher ID:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <MaterialCommunityIcons
-                    name="badge-account"
-                    size={24}
-                    color="#1a8739"
-                  />
-                  <Text style={styles.infoText}>{profileData.teacherid}</Text>
-                </View>
-              </View>
-              <View style={styles.rowLine}></View>
-              <View style={styles.infoRow}>
-                <View style={styles.infoFieldContainer}>
-                  <Text style={styles.infoField}>Qualification:</Text>
-                </View>
-                <View style={styles.infoTextContainer}>
-                  <Ionicons name="school" size={24} color="#1a8739" />
-                  <Text style={styles.infoText}>
-                    {profileData.qualification}
-                  </Text>
-                </View>
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
               </View>
               <View style={styles.infoTextContainer}>
                 <Ionicons name="school" size={24} color="#1a8739" />
                 <Text style={styles.infoText}>{profileData.semester}</Text>
               </View>
-<<<<<<< HEAD
             </View>
             
           </>
@@ -250,10 +178,6 @@ export const Profile = () => {
           </>
           
         )}
-=======
-            </>
-          )}
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
         </View>
         {/* Footer */}
         <View style={styles.footerLine}></View>
@@ -317,13 +241,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-<<<<<<< HEAD
     fontWeight: 'bold',
-    color: 'white',
-=======
-    fontWeight: "bold",
-    color: "black",
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
+    color: 'black',
     marginBottom: 10,
     marginTop: 40,
     textAlign: "center",

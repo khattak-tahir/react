@@ -189,17 +189,10 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   headerText: {
-<<<<<<< HEAD
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'white', // Default text color
-=======
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "left",
-    color: "black", // Default text color
->>>>>>> 9442a535bbecb195edf6c952a07f66448475f58c
+    fontWeight: 'bold',
+    textAlign: 'left',
+    color: 'black', // Default text color
   },
   imageContainer: {
     alignItems: "center",
