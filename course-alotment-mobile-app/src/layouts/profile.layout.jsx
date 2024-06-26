@@ -2,25 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
+import { useUser } from "../context/UserContext";
+
+
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const route = useRoute();
-  const { user, role } = route.params;
+  const { user, role } = useUser(); // Use the useUser hook to get user and role
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const endpoint = role === "teacher" ? "/teachers" : "/students";
-        const response = await axios.get(
-          `http://192.168.100.3:3001/${endpoint}`
-        );
+        const url = `http://192.168.225.85:3001${endpoint}`;
+        console.log(`Fetching profile data from URL: ${url}`); // Log the URL
+
+        const response = await axios.get(url);
         const data = response.data;
+        console.log('Profile data fetched:', data);
+        const userProfile = data.find(item => item.name === user.name);
+        if (userProfile) {
 
         if (role === "teacher") {
-          const { name, cnic, teacherid, qualification, gender } = data;
+          const { name, cnic, teacherid, qualification, gender } = userProfile;
           setProfileData({
             name,
             cnic,
@@ -29,16 +36,24 @@ export const Profile = () => {
             gender,
           });
         } else {
-          const { name, cnic, aridno, degree, semester } = data;
+          const { name, cnic, aridno, degree, semester } = userProfile;
           setProfileData({
             name,
             cnic,
-            aridNo: aridno,
+            aridno,
             degree,
             semester,
           });
         }
-      } catch (error) {
+      }
+      else{
+        Alert.alert(
+          "Error",
+          "User profile not found."
+        );
+      }
+    }
+       catch (error) {
         console.error("Error fetching profile data:", error);
         Alert.alert(
           "Error",
@@ -50,7 +65,7 @@ export const Profile = () => {
     if (role) {
       fetchProfileData();
     }
-  }, [user]);
+  }, [role,user]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

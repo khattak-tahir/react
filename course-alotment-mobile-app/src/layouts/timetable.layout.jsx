@@ -25,7 +25,7 @@ export const Timetable = () => {
   const fetchStudentData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.100.3:3001/students/${user.aridno}`
+        `http://192.168.225.85:3001/students/${user.aridno}`
       );
       const data = await response.json();
       console.log(data);
@@ -40,7 +40,7 @@ export const Timetable = () => {
   const fetchTeacherData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.100.3:3001/teachers/${user.name}/classes`
+        `http://192.168.225.85:3001/teachers/${user.name}/classes`
       );
       const data = await response.json();
 

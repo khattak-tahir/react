@@ -45,7 +45,7 @@ export const Settings = ({ navigation }) => {
   };
 
   const handleSupportEmailPress = () => {
-    const email = "dev.ansaryousafzai@gmail.com"; // Replace this with the actual email address
+    const email = "tahirkhattak456@gmail.com"; // Replace this with the actual email address
     Linking.openURL(`mailto:${email}`);
   };
 
@@ -123,7 +123,7 @@ export const Settings = ({ navigation }) => {
             <TouchableOpacity onPress={handleSupportEmailPress}>
               <View style={styles.settingValueContainer}>
                 <Text style={styles.settingValue}>
-                  dev.ansaryousafzai@gmail.com
+                tahirkhattak456@gmail.com
                 </Text>
                 <View style={styles.iconarrow1}>
                   <Icon name="chevron-right" size={12} color="#525252" />

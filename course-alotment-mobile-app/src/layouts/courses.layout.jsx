@@ -10,7 +10,7 @@ const CoursesScreen = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://192.168.100.3:3001/courses");
+      const response = await fetch("http://192.168.225.85:3001/courses");
       const data = await response.json();
       setCourses(data);
     } catch (error) {
